@@ -30,6 +30,7 @@ SOURCES += \
     c_myparser.cpp \
     c_sessioncontroller.cpp \
         main.cpp \
+    newclassforgit.cpp \
     w_logswindow.cpp \
         w_mainwindow.cpp \
     c_clinictcpserver.cpp \
@@ -59,6 +60,7 @@ HEADERS += \
     c_myparser.h \
     c_sessioncontroller.h \
     c_structures.h \
+    newclassforgit.h \
     w_logswindow.h \
         w_mainwindow.h \
     c_clinictcpserver.h \
