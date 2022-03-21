@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/gifs">
+        <file>gifs/ezgif.com-crop.gif</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,180 @@
+QMainWindow#w_MainWindow {
+    background-color: #FFFFFF;
+}
+
+
+QToolBar#mainToolBar {
+    background-color: #fafafb;
+}
+
+
+QGroupBox#listeningOptionGroupBox {
+    background-color: #fafafb;
+}
+
+QDialog#w_serverConfigurationDialog {
+    background-color: #ffffff;
+}
+
+QGroupBox#serverInfoGroupBox {
+    background-color: #fafbfb;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+QGroupBox#serverInfoGroupBox::title {
+    background-color: #fafbfb;
+    border: 2px solid black;
+    border-radius: 3px;
+    padding: 2px;
+    font-weight: bolder;
+}
+
+QGroupBox#interfacaInfoGroupBox {
+    background-color: #fafbfb;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+QGroupBox#interfacaInfoGroupBox::title {
+    background-color: #fafbfb;
+    border: 2px solid black;
+    border-radius: 3px;
+    padding: 2px;
+    font: bold;
+}
+
+QGroupBox#databseInfoGroupBox {
+    background-color: #fafbfb;
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+QGroupBox#databseInfoGroupBox::title {
+    background-color: #fafbfb;
+    border: 2px solid black;
+    border-radius: 3px;
+    padding: 2px;
+    font: bold;
+}
+
+QGroupBox#listeningOptionGroupBox {
+    background-color: #fafbfb;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding-top: 5px;
+}
+
+QGroupBox#listeningOptionGroupBox::title {
+    background-color: #fafbfb;
+    border: 2px solid black;
+    border-radius: 3px;
+    padding: 2px;
+    font: bold;
+}
+
+QGroupBox#interfaceListGroupBox {
+    background-color: #fafbfb;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding-top: 5px;
+}
+
+QGroupBox#interfaceListGroupBox::title {
+    background-color: #fafbfb;
+    border: 1px solid black;
+    border-radius: 3px;
+    padding: 2px;
+    font: bold;
+}
+
+QLineEdit#portLineEdit {
+    background-color: #fafbfb;
+    border: 1px solid black;
+    border-radius: 2px;
+}
+
+QLabel#l_serverStatus {
+    font: bold;
+}
+
+QLabel#l_port {
+    font: bold;
+}
+
+QLabel#l_address {
+    font: bold;
+}
+
+QLabel#l_AuthDbStatus {
+    font: bold;
+}
+
+QLabel#l_ClinicDbStatus {
+    font: bold;
+}
+
+QLabel#l_HostsConnectedNumber {
+    font: bold;
+}
+
+QLabel#l_broadcastLabel {
+    font: bold;
+}
+QLabel#l_canBradcast {
+    font: bold;
+}
+QLabel#l_canMulticast {
+    font: bold;
+}
+QLabel#l_humanNameLabel {
+    font: bold;
+}
+QLabel#l_ipv4Label {
+    font: bold;
+}
+QLabel#l_isLoopback {
+    font: bold;
+}
+QLabel#l_isPointToPoint {
+    font: bold;
+}
+QLabel#l_isRunning {
+    font: bold;
+}
+QLabel#l_isUp {
+    font: bold;
+}
+QLabel#l_macLabel {
+    font: bold;
+}
+QLabel#l_nameLabel {
+    font: bold;
+}
+QLabel#l_netmaskLabel {
+    font: bold;
+}
+
+QPushButton#testConnectionButton {
+    background: qlineargradient( x1:0 y1:0, x2:0 y2:1, stop:0 #FFFFFF, stop:1 #DDDDDD);
+    border-style: solid;
+    border-width: 1px;
+    border-color: #000000;
+    border-radius: 5px;
+    font: bold;
+    color: #000000;
+}
+
+QPushButton#testConnectionButton:hover {
+    background: qlineargradient( x1:0 y1:0, x2:0 y2:1, stop:0 #FFFFFF, stop:1 #DDDDDD);
+    border-style: solid;
+    border-width: 2px;
+    border-color: #000000;
+    border-radius: 5px;
+    font: bold;
+    color: #000000;
+}
+
+
+
+

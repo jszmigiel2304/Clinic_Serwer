@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>w_InterfaceInformationsWidget</class>
+ <widget class="QWidget" name="w_InterfaceInformationsWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>781</width>
+    <height>231</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QGroupBox" name="interfacaInfoGroupBox">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>5</y>
+     <width>771</width>
+     <height>221</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Interface</string>
+   </property>
+   <widget class="QLabel" name="l_nameLabel">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>80</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Nazwa</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="l_humanNameLabel">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>80</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Nazwa</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="l_macLabel">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>80</y>
+      <width>80</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>MAC</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="l_ipv4Label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>110</y>
+      <width>80</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>IPv4</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="l_netmaskLabel">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>140</y>
+      <width>80</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Netmask</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="l_broadcastLabel">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>170</y>
+      <width>80</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Broadcast</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="f_name">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>20</y>
+      <width>311</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="f_humanName">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>50</y>
+      <width>311</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="f_mac">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>80</y>
+      <width>311</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="f_ipv4">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>110</y>
+      <width>311</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="f_netmask">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>140</y>
+      <width>311</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="f_broadcast">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>170</y>
+      <width>311</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="l_isUp">
+    <property name="geometry">
+     <rect>
+      <x>411</x>
+      <y>20</y>
+      <width>100</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Is Up</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="l_isRunning">
+    <property name="geometry">
+     <rect>
+      <x>411</x>
+      <y>50</y>
+      <width>100</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Is Running</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="l_canBradcast">
+    <property name="geometry">
+     <rect>
+      <x>411</x>
+      <y>80</y>
+      <width>100</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Can Broadcast</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="l_isLoopback">
+    <property name="geometry">
+     <rect>
+      <x>411</x>
+      <y>110</y>
+      <width>100</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Is LoopBack</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="l_isPointToPoint">
+    <property name="geometry">
+     <rect>
+      <x>411</x>
+      <y>140</y>
+      <width>100</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Is PointToPoint</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="l_canMulticast">
+    <property name="geometry">
+     <rect>
+      <x>411</x>
+      <y>170</y>
+      <width>100</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Can Multicast</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="f_isUp">
+    <property name="geometry">
+     <rect>
+      <x>511</x>
+      <y>20</y>
+      <width>50</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="f_IsRunning">
+    <property name="geometry">
+     <rect>
+      <x>511</x>
+      <y>50</y>
+      <width>50</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="f_canBroadcast">
+    <property name="geometry">
+     <rect>
+      <x>511</x>
+      <y>80</y>
+      <width>50</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="f_isLoopBack">
+    <property name="geometry">
+     <rect>
+      <x>511</x>
+      <y>110</y>
+      <width>50</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="f_isPointToPoint">
+    <property name="geometry">
+     <rect>
+      <x>511</x>
+      <y>140</y>
+      <width>50</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="f_canMlticast">
+    <property name="geometry">
+     <rect>
+      <x>511</x>
+      <y>170</y>
+      <width>50</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

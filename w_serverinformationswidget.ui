@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>w_ServerInformationsWidget</class>
+ <widget class="QWidget" name="w_ServerInformationsWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>781</width>
+    <height>130</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QGroupBox" name="serverInfoGroupBox">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>5</y>
+     <width>771</width>
+     <height>121</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Server</string>
+   </property>
+   <widget class="QLabel" name="l_serverStatus">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>15</y>
+      <width>80</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Status</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="l_address">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>45</y>
+      <width>80</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Address</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="l_port">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>75</y>
+      <width>80</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Port</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="f_serverStatus">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>15</y>
+      <width>300</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="f_address">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>45</y>
+      <width>300</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="f_port">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>75</y>
+      <width>300</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="l_AuthDbStatus">
+    <property name="geometry">
+     <rect>
+      <x>411</x>
+      <y>15</y>
+      <width>100</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Auth Database</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="l_ClinicDbStatus">
+    <property name="geometry">
+     <rect>
+      <x>411</x>
+      <y>45</y>
+      <width>100</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Clinic Database</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="l_HostsConnectedNumber">
+    <property name="geometry">
+     <rect>
+      <x>411</x>
+      <y>75</y>
+      <width>100</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Hosts Number</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="f_AuthDbStatus">
+    <property name="geometry">
+     <rect>
+      <x>511</x>
+      <y>15</y>
+      <width>250</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="f_ClinicDbStatus">
+    <property name="geometry">
+     <rect>
+      <x>511</x>
+      <y>45</y>
+      <width>250</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="f_HostsNumber">
+    <property name="geometry">
+     <rect>
+      <x>511</x>
+      <y>75</y>
+      <width>250</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
