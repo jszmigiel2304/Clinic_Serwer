@@ -87,19 +87,20 @@ threadData c_myParser::Parse(quint32 size, QByteArray data)
     return received_data;
 }
 
-QAuthenticator c_myParser::parseForAuthenticateData(quint32 size, QByteArray data)
+authenticator c_myParser::parseForAuthenticateData(quint32 size, QByteArray data)
 {
-    QAuthenticator authData;
+    authenticator authData;
 
     QDataStream rs(&data, QIODevice::ReadOnly);
     rs.setVersion(QDataStream::Qt_6_0);
 
-    QString name, password;
+    QString name;
+    QByteArray password;
 
     rs >> name >> password;
 
-    authData.setUser(name);
-    authData.setPassword(password);
+    authData.name = name;
+    authData.password = password;
 
     return authData;
 }

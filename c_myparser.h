@@ -18,7 +18,7 @@ public:
     explicit c_myParser(QObject *parent = nullptr);
 
     threadData Parse(quint32 size, QByteArray data);
-    QAuthenticator parseForAuthenticateData(quint32 size, QByteArray data);
+    authenticator parseForAuthenticateData(quint32 size, QByteArray data);
 
 
     w_logsWindow *getLogs() const;

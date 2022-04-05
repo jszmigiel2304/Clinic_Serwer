@@ -81,10 +81,13 @@ void c_actionExecutive::processGetRequest(threadData processedRequest, QMap<thre
         c_sessionController sessionCtrlr(qobject_cast<c_ClinicTcpServer *>(parent())->getDbContr());
         c_myParser parser;
 
-        QAuthenticator authData = parser.parseForAuthenticateData(processedRequest.data_size, processedRequest.data);
+        authenticator authData = parser.parseForAuthenticateData(processedRequest.data_size, processedRequest.data);
 
+        QString u = authData.name;
+        QByteArray ptolatin = authData.password;
+        QString pstrtgin = authData.password;
 
-        sessionCtrlr.getSessionsFromDataBase(authData.user(),authData.password());
+        sessionCtrlr.getSessionsFromDataBase(authData.name, authData.password);
         break;
     }
     default:

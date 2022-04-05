@@ -24,8 +24,8 @@ public:
     c_MySqlDatabaseController *getDataBasesCtrlr() const;
     void setDataBasesCtrlr(c_MySqlDatabaseController *newDataBasesCtrlr);
 
-    QList<sessionInformations> getSessionsFromDataBase(QString userName, QString userPassword);
-    sessionInformations newSession(QString userName, QString userPassword);
+    QList<sessionInformations> getSessionsFromDataBase(QString userName, QByteArray userPassword);
+    sessionInformations newSession(QString userName, QByteArray userPassword);
 
 private:
     c_MySqlDatabaseController * dataBasesCtrlr;

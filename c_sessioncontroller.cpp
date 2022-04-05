@@ -25,11 +25,15 @@ void c_sessionController::setDataBasesCtrlr(c_MySqlDatabaseController *newDataBa
     dataBasesCtrlr = newDataBasesCtrlr;
 }
 
-QList<sessionInformations> c_sessionController::getSessionsFromDataBase(QString userName, QString userPassword)
+QList<sessionInformations> c_sessionController::getSessionsFromDataBase(QString userName, QByteArray userPassword)
 {
     QList<sessionInformations> sessions;
 
-    QString query("SELECT * FROM public.sessions LEFT JOIN public.users ON public.users.id = public.sessions.id_user WHERE public.users.name = 'jszmigiel2304' AND public.users.password = '\\xab02b2345238d001543b7ecf94273ad1' AND public.sessions.state = 0");
+    //QString query("SELECT * FROM public.sessions LEFT JOIN public.users ON public.users.id = public.sessions.id_user WHERE public.users.name = 'jszmigiel2304' AND public.users.password = '\\xab02b2345238d001543b7ecf94273ad1' AND public.sessions.state = 0");
+
+    QString query = QString("SELECT * FROM public.sessions LEFT JOIN public.users ON public.users.id = public.sessions.id_user"
+                  " WHERE public.users.name = '%1' AND public.users.password = '\\x%2' AND public.sessions.state = 0").arg(userName, userPassword.toHex());
+
 
     QList<QVariantList> tempList = dataBasesCtrlr->exe(query, "Authorization");
 
@@ -41,7 +45,7 @@ QList<sessionInformations> c_sessionController::getSessionsFromDataBase(QString 
     return sessions;
 }
 
-sessionInformations c_sessionController::newSession(QString userName, QString userPassword)
+sessionInformations c_sessionController::newSession(QString userName, QByteArray userPassword)
 {
     sessionInformations session;
 

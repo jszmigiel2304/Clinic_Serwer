@@ -12,6 +12,11 @@ enum SessionState {NOT_DEFINED = 0x00, DEFINED_NOT_STARTED = 0x01, STARTED = 0x1
 enum ThreadDestination {SERVER = 0x00, CLINIC = 0x10, CLINIC_CONNECTION_CONTROLLER = 0x11};
 enum RequestType {PING = 0x00, REPLY = 0x01, MESSAGE = 0x02, GET = 0x03, REQUEST = 0x04, UPDATE = 0x05, DELETE = 0x06, SEND = 0x07};
 
+struct authenticator {
+    QString name;
+    QByteArray password;
+};
+
 struct moduleInfo {
     QString name;
     QString displayedName;
