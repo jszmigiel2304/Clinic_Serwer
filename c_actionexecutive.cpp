@@ -83,11 +83,10 @@ void c_actionExecutive::processGetRequest(threadData processedRequest, QMap<thre
 
         authenticator authData = parser.parseForAuthenticateData(processedRequest.data_size, processedRequest.data);
 
-        QString u = authData.name;
-        QByteArray ptolatin = authData.password;
-        QString pstrtgin = authData.password;
-
         sessionCtrlr.getSessionsFromDataBase(authData.name, authData.password);
+
+
+
         break;
     }
     default:
