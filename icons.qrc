@@ -1,0 +1,27 @@
+<RCC>
+    <qresource prefix="/actions">
+        <file>icons/configure.png</file>
+        <file>icons/start.png</file>
+        <file>icons/stop.png</file>
+        <file>icons/if_032_95930.png</file>
+        <file>icons/if_accept-database_49574.png</file>
+        <file>icons/if_database_refresh_35959.png</file>
+        <file>icons/if_remove-from-database_49610.png</file>
+        <file>icons/if_server_information_103339.png</file>
+        <file>icons/if_server_run_103341.png</file>
+        <file>icons/if_server_settings_103343.png</file>
+        <file>icons/if_server_stop_103344.png</file>
+        <file>icons/if_browser_window_settings_103427.png</file>
+        <file>icons/if_sign-error_299045.png</file>
+        <file>icons/error80x80.png</file>
+        <file>icons/appIcon.png</file>
+        <file>icons/if_multimedia-37_809491 (1).png</file>
+        <file>icons/if_refresh27_216529.png</file>
+        <file>icons/if_cross_48_10298.png</file>
+        <file>icons/Clinic_Serwer.ico</file>
+    </qresource>
+    <qresource prefix="/gifs"/>
+    <qresource prefix="/">
+        <file>icons/Clinic_Serwer.ico</file>
+    </qresource>
+</RCC>
