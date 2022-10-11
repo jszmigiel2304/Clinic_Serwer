@@ -326,10 +326,14 @@ void c_actionExecutive::processRequestRequest(processedThreadData processedReque
         QMap<QString, QVariant> map;
         map["id"] = results[0]["id"].toInt();
         map["name"] = results[0]["name"].toString();
-        map["logInTime"] = time.toString();
-        map["blocked"] = results[0]["blocked"].toBool();
         map["email"] = results[0]["email"].toString();
         map["verified"] = results[0]["verified"].toBool();
+        map["blocked"] = results[0]["blocked"].toBool();
+        map["create_date"] = results[0]["create_date"].toString();
+        map["verify_date"] = results[0]["verify_date"].toString();
+        map["block_date"] = results[0]["block_date"].toString();
+        map["photo"] = results[0]["photo"].toByteArray();
+        map["logInTime"] = time.toString();
         map["role"] = results[0]["role"].toString();
         dataForJSON.append(map);
 
