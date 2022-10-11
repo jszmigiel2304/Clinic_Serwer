@@ -31,26 +31,26 @@ public:
     w_logsWindow *getLogs() const;
     void setLogs(w_logsWindow *value);
 
-    const QList<processedThreadData> &getReceivedDataFromClients() const;
-    void setReceivedDataFromClients(const QList<processedThreadData> &newReceivedDataFromClients);
+    const QList<myStructures::processedThreadData> &getReceivedDataFromClients() const;
+    void setReceivedDataFromClients(const QList<myStructures::processedThreadData> &newReceivedDataFromClients);
 
     bool getProcessingMode() const;
     void setProcessingMode(bool newProcessingMode);
 
-    void processRequests(QMap<QString, processedThreadData> * processedRequestErrors = nullptr);
+    void processRequests(QMap<QString, myStructures::processedThreadData> * processedRequestErrors = nullptr);
 
     c_MySqlDatabaseController *getDataBasesCtrlr() const;
 
 public slots:
-    void newDataReceivedFromClient(processedThreadData data);
+    void newDataReceivedFromClient(myStructures::processedThreadData data);
     void setDataBasesCtrlr(c_MySqlDatabaseController *newDataBasesCtrlr);
-    void dataReceived(processedThreadData data);
+    void dataReceived(myStructures::processedThreadData data);
 
 protected:
 
 private:
-    QList<processedThreadData> receivedDataFromClients;
-    QMap<QString, processedThreadData> * processedRequestErrors;
+    QList<myStructures::processedThreadData> receivedDataFromClients;
+    QMap<QString, myStructures::processedThreadData> * processedRequestErrors;
 
     c_MySqlDatabaseController * dataBasesCtrlr;
 
@@ -60,12 +60,12 @@ private:
 
 private slots:
     void startProcessingRequests();
-    void processGetRequest(processedThreadData processedRequest, QMap<QString, processedThreadData> * processedRequestErrors = nullptr);
-    void processMessageRequest(processedThreadData processedRequest, QMap<QString, processedThreadData> * processedRequestErrors = nullptr);
-    void processConfirmRequest(processedThreadData processedRequest, QMap<QString, processedThreadData> * processedRequestErrors = nullptr);
-    void processRequestRequest(processedThreadData processedRequest, QMap<QString, processedThreadData> * processedRequestErrors = nullptr);
-    void processUpdateRequest(processedThreadData processedRequest, QMap<QString, processedThreadData> * processedRequestErrors = nullptr);
-    void processErrors(QMap<QString, processedThreadData> * errors);
+    void processGetRequest(myStructures::processedThreadData processedRequest, QMap<QString, myStructures::processedThreadData> * processedRequestErrors = nullptr);
+    void processMessageRequest(myStructures::processedThreadData processedRequest, QMap<QString, myStructures::processedThreadData> * processedRequestErrors = nullptr);
+    void processConfirmRequest(myStructures::processedThreadData processedRequest, QMap<QString, myStructures::processedThreadData> * processedRequestErrors = nullptr);
+    void processRequestRequest(myStructures::processedThreadData processedRequest, QMap<QString, myStructures::processedThreadData> * processedRequestErrors = nullptr);
+    void processUpdateRequest(myStructures::processedThreadData processedRequest, QMap<QString, myStructures::processedThreadData> * processedRequestErrors = nullptr);
+    void processErrors(QMap<QString, myStructures::processedThreadData> * errors);
 
 signals:
     void newDataInBuffor();
@@ -74,7 +74,7 @@ signals:
     void exeDataBaseQuery(QString query, QString destDatabase, QList<QMap<QString,QVariant>> * results, QStringList * errors = nullptr);
     void newLog(QString log);
     void newLogToFile(QString sender, QString notes, QByteArray data);
-    void processingErrors(QMap<QString, processedThreadData> * errors);
+    void processingErrors(QMap<QString, myStructures::processedThreadData> * errors);
 
 };
 

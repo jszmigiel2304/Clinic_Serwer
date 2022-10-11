@@ -25,7 +25,7 @@ public:
 
     QString getInsertNewSessionQuery(QUuid id_session, qint32 id_user, QDateTime create_time, QHostAddress ip_address) const;
     QString getUpdateSessionActivityQuery(QUuid id_session, QByteArray data) const;
-    QString getUpdateSessionStatusQuery(QUuid id_session, SessionState state);
+    QString getUpdateSessionStatusQuery(QUuid id_session, myTypes::SessionState state);
     QString getUpdateSessionCloseTimeQuery(QUuid id_session, QDateTime close_time);
 
     void setUpSession(QMap<QString, QVariant> map);
@@ -58,8 +58,8 @@ public:
     const QDateTime &getCurrentOpenTime() const;
     void setCurrentOpenTime(const QDateTime &newCurrentOpenTime);
 
-    SessionState getState() const;
-    void setState(SessionState newState);
+    myTypes::SessionState getState() const;
+    void setState(myTypes::SessionState newState);
 
 
     c_User *getUser() const;
@@ -90,7 +90,7 @@ private:
     QByteArray fileData;
     const quint32 sessionExpireTime = SESSION_EXPIRE_TIME;
 
-    SessionState state;
+    myTypes::SessionState state;
 
     QFile sessionFile;
 

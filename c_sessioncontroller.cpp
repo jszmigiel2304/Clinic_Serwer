@@ -26,19 +26,19 @@ QString c_sessionController::getUpdateSessionActivityQuery(QUuid id_session, QBy
     return query;
 }
 
-QString c_sessionController::getUpdateSessionStatusQuery(QUuid id_session, SessionState state)
+QString c_sessionController::getUpdateSessionStatusQuery(QUuid id_session, myTypes::SessionState state)
 {
     QString stateString;
     switch(static_cast<qint32>(state)) {
-    case NOT_DEFINED: { stateString = QString("NOT_DEFINED"); break; }
-    case DEFINED_NOT_STARTED: { stateString = QString("DEFINED_NOT_STARTED"); break; }
-    case STARTED: { stateString = QString("STARTED"); break; }
-    case RESTORED: { stateString = QString("RESTORED"); break; }
-    case RESTARTED: { stateString = QString("RESTARTED"); break; }
-    case PAUSED_NOT_SAVED: { stateString = QString("PAUSED_NOT_SAVED"); break; }
-    case PAUSED_SAVED: { stateString = QString("PAUSED_SAVED"); break; }
-    case CLOSED_NOT_SAVED: { stateString = QString("CLOSED_NOT_SAVED"); break; }
-    case CLOSED_SAVED: { stateString = QString("CLOSED_SAVED"); break; }
+    case myTypes::NOT_DEFINED: { stateString = QString("NOT_DEFINED"); break; }
+    case myTypes::DEFINED_NOT_STARTED: { stateString = QString("DEFINED_NOT_STARTED"); break; }
+    case myTypes::STARTED: { stateString = QString("STARTED"); break; }
+    case myTypes::RESTORED: { stateString = QString("RESTORED"); break; }
+    case myTypes::RESTARTED: { stateString = QString("RESTARTED"); break; }
+    case myTypes::PAUSED_NOT_SAVED: { stateString = QString("PAUSED_NOT_SAVED"); break; }
+    case myTypes::PAUSED_SAVED: { stateString = QString("PAUSED_SAVED"); break; }
+    case myTypes::CLOSED_NOT_SAVED: { stateString = QString("CLOSED_NOT_SAVED"); break; }
+    case myTypes::CLOSED_SAVED: { stateString = QString("CLOSED_SAVED"); break; }
     default: { stateString = QString("ERROR"); break; }
     }
 
@@ -84,16 +84,16 @@ void c_sessionController::setUpSession(QMap<QString, QVariant> map)
     setStartTime(start);
     setEndTime(end);
 
-    if(map["state"].toString() == "NOT_DEFINED") setState(NOT_DEFINED);
-    if(map["state"].toString() == "DEFINED_NOT_STARTED") setState(DEFINED_NOT_STARTED);
-    if(map["state"].toString() == "STARTED") setState(STARTED);
-    if(map["state"].toString() == "RESTORED") setState(RESTORED);
-    if(map["state"].toString() == "RESTARTED") setState(RESTARTED);
-    if(map["state"].toString() == "PAUSED_NOT_SAVED") setState(PAUSED_NOT_SAVED);
-    if(map["state"].toString() == "PAUSED_SAVED") setState(PAUSED_SAVED);
-    if(map["state"].toString() == "CLOSED_NOT_SAVED") setState(CLOSED_NOT_SAVED);
-    if(map["state"].toString() == "CLOSED_SAVED") setState(CLOSED_SAVED);
-    if(map["state"].toString() == "ERROR") setState(ERROR);
+    if(map["state"].toString() == "NOT_DEFINED") setState(myTypes::NOT_DEFINED);
+    if(map["state"].toString() == "DEFINED_NOT_STARTED") setState(myTypes::DEFINED_NOT_STARTED);
+    if(map["state"].toString() == "STARTED") setState(myTypes::STARTED);
+    if(map["state"].toString() == "RESTORED") setState(myTypes::RESTORED);
+    if(map["state"].toString() == "RESTARTED") setState(myTypes::RESTARTED);
+    if(map["state"].toString() == "PAUSED_NOT_SAVED") setState(myTypes::PAUSED_NOT_SAVED);
+    if(map["state"].toString() == "PAUSED_SAVED") setState(myTypes::PAUSED_SAVED);
+    if(map["state"].toString() == "CLOSED_NOT_SAVED") setState(myTypes::CLOSED_NOT_SAVED);
+    if(map["state"].toString() == "CLOSED_SAVED") setState(myTypes::CLOSED_SAVED);
+    if(map["state"].toString() == "ERROR") setState(myTypes::ERROR);
 
 }
 
@@ -217,12 +217,12 @@ void c_sessionController::setCurrentOpenTime(const QDateTime &newCurrentOpenTime
     currentOpenTime = newCurrentOpenTime;
 }
 
-SessionState c_sessionController::getState() const
+myTypes::SessionState c_sessionController::getState() const
 {
     return state;
 }
 
-void c_sessionController::setState(SessionState newState)
+void c_sessionController::setState(myTypes::SessionState newState)
 {
     state = newState;
 }

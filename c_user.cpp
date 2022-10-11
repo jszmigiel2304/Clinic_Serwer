@@ -34,7 +34,7 @@ QString c_User::getSelectIdQuery() const
     return query;
 }
 
-QString c_User::getInsertLoggingLogQuery(qint32 id_user, QDateTime log_time, QHostAddress ip_address, USER_LOG_DB_ACTIVITY activity) const
+QString c_User::getInsertLoggingLogQuery(qint32 id_user, QDateTime log_time, QHostAddress ip_address, myTypes::USER_LOG_DB_ACTIVITY activity) const
 {
     QString activityStr;
     switch (static_cast<qint32>(activity))

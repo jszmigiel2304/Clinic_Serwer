@@ -4,11 +4,11 @@
 c_actionExecutive::c_actionExecutive(QObject *parent) : QObject(parent)
 {
     setProcessingMode(false);
-    processedRequestErrors = new QMap<QString, processedThreadData>();
+    processedRequestErrors = new QMap<QString, myStructures::processedThreadData>();
 
 
     connect(this, SIGNAL(newDataInBuffor()), this, SLOT(startProcessingRequests()));
-    connect(this, SIGNAL(processingErrors(QMap<QString, processedThreadData> *)), this, SLOT(processErrors(QMap<QString, processedThreadData> *)));
+    connect(this, SIGNAL(processingErrors(QMap<QString, myStructures::processedThreadData> *)), this, SLOT(processErrors(QMap<QString, myStructures::processedThreadData> *)));
 }
 
 c_actionExecutive::~c_actionExecutive()
@@ -16,7 +16,7 @@ c_actionExecutive::~c_actionExecutive()
     delete processedRequestErrors;
 }
 
-void c_actionExecutive::newDataReceivedFromClient(processedThreadData data)
+void c_actionExecutive::newDataReceivedFromClient(myStructures::processedThreadData data)
 {
     receivedDataFromClients.push_back(data);
 
@@ -46,7 +46,7 @@ void c_actionExecutive::setDataBasesCtrlr(c_MySqlDatabaseController *newDataBase
     connect( this, SIGNAL(exeDataBaseQuery(QString, QString, QList<QMap<QString,QVariant>> *,QStringList *)), dataBasesCtrlr, SLOT(exe(QString, QString, QList<QMap<QString,QVariant>> *, QStringList *)) );
 }
 
-void c_actionExecutive::dataReceived(processedThreadData data)
+void c_actionExecutive::dataReceived(myStructures::processedThreadData data)
 {
 
     newDataReceivedFromClient(data);
@@ -63,7 +63,7 @@ void c_actionExecutive::startProcessingRequests()
 
 }
 
-void c_actionExecutive::processGetRequest(processedThreadData processedRequest, QMap<QString, processedThreadData> *processedRequestErrors)
+void c_actionExecutive::processGetRequest(myStructures::processedThreadData processedRequest, QMap<QString, myStructures::processedThreadData> *processedRequestErrors)
 {
     switch (processedRequest.type_flag) {
     case 0x00000000:  //getUserID from database
@@ -102,11 +102,11 @@ void c_actionExecutive::processGetRequest(processedThreadData processedRequest, 
 
 
         QMap<QString, QVariant> packetInfo;
-        packetInfo["thread_dest"] = static_cast<qint8>(CLINIC_LOGGED_USER_CONTROLLER);
+        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
         packetInfo["thread_id"] = processedRequest.thread_id;
-        packetInfo["req_type"] = static_cast<qint8>(REPLY);
+        packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
         packetInfo["type_flag"] = 0x00000001;
-        packetInfo["content"] = static_cast<qint32>(USER_ID_ANSWER);
+        packetInfo["content"] = static_cast<qint32>(myTypes::USER_ID_ANSWER);
         packetInfo["ref_md5"] = QJsonValue::fromVariant( processedRequest.md5Hash.toHex() );
 
         QJsonDocument replyJSON = parser.prepareJSON(packetInfo, results);
@@ -187,14 +187,14 @@ void c_actionExecutive::processGetRequest(processedThreadData processedRequest, 
         else
             address = QHostAddress();
 
-        emit exeDataBaseQuery(tempUser.getInsertLoggingLogQuery(tempUser.getId(), time, address, SESSION_CREATED), QString("Authorization"), &results, &errors);
+        emit exeDataBaseQuery(tempUser.getInsertLoggingLogQuery(tempUser.getId(), time, address, myTypes::SESSION_CREATED), QString("Authorization"), &results, &errors);
 
         QMap<QString, QVariant> packetInfo;
-        packetInfo["thread_dest"] = static_cast<qint8>(CLINIC_SESSION_CONTROLLER);
+        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_SESSION_CONTROLLER);
         packetInfo["thread_id"] = processedRequest.thread_id;
-        packetInfo["req_type"] = static_cast<qint8>(REPLY);
+        packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
         packetInfo["type_flag"] = 0x00000001;
-        packetInfo["content"] = static_cast<qint32>(NEW_SESSION_SETTINGS);
+        packetInfo["content"] = static_cast<qint32>(myTypes::NEW_SESSION_SETTINGS);
         packetInfo["ref_md5"] = QJsonValue::fromVariant( processedRequest.md5Hash.toHex() );
 
 
@@ -218,7 +218,7 @@ void c_actionExecutive::processGetRequest(processedThreadData processedRequest, 
     }
 }
 
-void c_actionExecutive::processMessageRequest(processedThreadData processedRequest, QMap<QString, processedThreadData> *processedRequestErrors)
+void c_actionExecutive::processMessageRequest(myStructures::processedThreadData processedRequest, QMap<QString, myStructures::processedThreadData> *processedRequestErrors)
 {
 
     switch (processedRequest.type_flag) {
@@ -234,7 +234,7 @@ void c_actionExecutive::processMessageRequest(processedThreadData processedReque
     }
 }
 
-void c_actionExecutive::processConfirmRequest(processedThreadData processedRequest, QMap<QString, processedThreadData> *processedRequestErrors)
+void c_actionExecutive::processConfirmRequest(myStructures::processedThreadData processedRequest, QMap<QString, myStructures::processedThreadData> *processedRequestErrors)
 {
     switch (processedRequest.type_flag) {
     case 0x00000000:
@@ -255,7 +255,7 @@ void c_actionExecutive::processConfirmRequest(processedThreadData processedReque
 
 }
 
-void c_actionExecutive::processRequestRequest(processedThreadData processedRequest, QMap<QString, processedThreadData> *processedRequestErrors)
+void c_actionExecutive::processRequestRequest(myStructures::processedThreadData processedRequest, QMap<QString, myStructures::processedThreadData> *processedRequestErrors)
 {
     switch (processedRequest.type_flag) {
     case 0x00000000:  // logIn request
@@ -300,7 +300,7 @@ void c_actionExecutive::processRequestRequest(processedThreadData processedReque
         else
             address = QHostAddress();
 
-        emit exeDataBaseQuery(tempUser.getInsertLoggingLogQuery(tempUser.getId(), time, address, LOGGED_IN), QString("Authorization"), &results, &errors);
+        emit exeDataBaseQuery(tempUser.getInsertLoggingLogQuery(tempUser.getId(), time, address, myTypes::LOGGED_IN), QString("Authorization"), &results, &errors);
         emit exeDataBaseQuery(tempUser.getUpdateUserIsLoggedQuery(tempUser.getId(), true), QString("Authorization"), &results, &errors);
 
         if( !errors.empty() ) {
@@ -316,11 +316,11 @@ void c_actionExecutive::processRequestRequest(processedThreadData processedReque
         QList< QMap<QString,QVariant> > dataForJSON;
 
         QMap<QString, QVariant> packetInfo;
-        packetInfo["thread_dest"] = static_cast<qint8>(CLINIC_LOGGED_USER_CONTROLLER);
+        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
         packetInfo["thread_id"] = processedRequest.thread_id;
-        packetInfo["req_type"] = static_cast<qint8>(REPLY);
+        packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
         packetInfo["type_flag"] = 0x00000001;
-        packetInfo["content"] = static_cast<qint32>(LOGGING_ANSWER);
+        packetInfo["content"] = static_cast<qint32>(myTypes::LOGGING_ANSWER);
         packetInfo["ref_md5"] = QJsonValue::fromVariant( processedRequest.md5Hash.toHex() );
 
         QMap<QString, QVariant> map;
@@ -386,7 +386,7 @@ void c_actionExecutive::processRequestRequest(processedThreadData processedReque
         emit exeDataBaseQuery(tempUser.getInsertLoggingLogQuery(tempUser.getId(),
                                                                 time,
                                                                 address,
-                                                                LOGGED_OUT),
+                                                                myTypes::LOGGED_OUT),
                               QString("Authorization"),
                               &results,
                               &errors);
@@ -405,11 +405,11 @@ void c_actionExecutive::processRequestRequest(processedThreadData processedReque
         QList< QMap<QString,QVariant> > dataForJSON;
 
         QMap<QString, QVariant> packetInfo;
-        packetInfo["thread_dest"] = static_cast<qint8>(CLINIC_LOGGED_USER_CONTROLLER);
+        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
         packetInfo["thread_id"] = processedRequest.thread_id;
-        packetInfo["req_type"] = static_cast<qint8>(REPLY);
+        packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
         packetInfo["type_flag"] = 0x00000001;
-        packetInfo["content"] = static_cast<qint32>(LOGGING_OUT_ANSWER);
+        packetInfo["content"] = static_cast<qint32>(myTypes::LOGGING_OUT_ANSWER);
         packetInfo["ref_md5"] = QJsonValue::fromVariant( processedRequest.md5Hash.toHex() );
 
         QMap<QString, QVariant> map;
@@ -457,11 +457,11 @@ void c_actionExecutive::processRequestRequest(processedThreadData processedReque
         }
 
         QMap<QString, QVariant> packetInfo;
-        packetInfo["thread_dest"] = static_cast<qint8>(CLINIC_LOGGED_USER_CONTROLLER);
+        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
         packetInfo["thread_id"] = processedRequest.thread_id;
-        packetInfo["req_type"] = static_cast<qint8>(REPLY);
+        packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
         packetInfo["type_flag"] = 0x00000000;
-        packetInfo["content"] = static_cast<qint32>(SESSION_UNLOCK_CONFIRMATION);
+        packetInfo["content"] = static_cast<qint32>(myTypes::SESSION_UNLOCK_CONFIRMATION);
         packetInfo["ref_md5"] = QJsonValue::fromVariant( processedRequest.md5Hash.toHex() );
 
         QJsonDocument replyJSON = parser.prepareJSON(packetInfo, QList<QMap<QString, QVariant>>());
@@ -477,7 +477,7 @@ void c_actionExecutive::processRequestRequest(processedThreadData processedReque
     }
 }
 
-void c_actionExecutive::processUpdateRequest(processedThreadData processedRequest, QMap<QString, processedThreadData> *processedRequestErrors)
+void c_actionExecutive::processUpdateRequest(myStructures::processedThreadData processedRequest, QMap<QString, myStructures::processedThreadData> *processedRequestErrors)
 {
     switch (processedRequest.type_flag) {
     case 0x01000001: // update session file data
@@ -545,15 +545,15 @@ void c_actionExecutive::processUpdateRequest(processedThreadData processedReques
         else
             address = QHostAddress();
 
-        emit exeDataBaseQuery(tempUser.getInsertLoggingLogQuery(tempUser.getId(), time, address, SESSION_FILE_UPDATED), QString("Authorization"), &results, &errors);
+        emit exeDataBaseQuery(tempUser.getInsertLoggingLogQuery(tempUser.getId(), time, address, myTypes::SESSION_FILE_UPDATED), QString("Authorization"), &results, &errors);
 
 
         QMap<QString, QVariant> packetInfo;
-        packetInfo["thread_dest"] = static_cast<qint8>(CLINIC_SESSION_CONTROLLER);
+        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_SESSION_CONTROLLER);
         packetInfo["thread_id"] = processedRequest.thread_id;
-        packetInfo["req_type"] = static_cast<qint8>(REPLY);
+        packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
         packetInfo["type_flag"] = 0x00000000;
-        packetInfo["content"] = static_cast<qint32>(SESSION_FILE_UPDATE_CONFIRMATION);
+        packetInfo["content"] = static_cast<qint32>(myTypes::SESSION_FILE_UPDATE_CONFIRMATION);
         packetInfo["ref_md5"] = QJsonValue::fromVariant( processedRequest.md5Hash.toHex() );
 
         QJsonDocument replyJSON = parser.prepareJSON(packetInfo, QList<QMap<QString, QVariant>>());
@@ -570,7 +570,7 @@ void c_actionExecutive::processUpdateRequest(processedThreadData processedReques
         QString name = processedRequest.data[0]["name"].toString();
         QString encryptedPassword = processedRequest.data[0]["encryptedPassword"].toString();
         QUuid session_identifier = processedRequest.data[0]["session_identifier"].toUuid();
-        SessionState session_state = static_cast<SessionState>( processedRequest.data[0]["session_state"].toInt() );
+        myTypes::SessionState session_state = static_cast<myTypes::SessionState>( processedRequest.data[0]["session_state"].toInt() );
 
         c_User tempUser(id, name, encryptedPassword);
 
@@ -632,24 +632,24 @@ void c_actionExecutive::processUpdateRequest(processedThreadData processedReques
             address = QHostAddress();
 
         switch(session_state) {
-        case DEFINED_NOT_STARTED: {
-            emit exeDataBaseQuery(tempUser.getInsertLoggingLogQuery(tempUser.getId(), time, address, SESSION_CREATED), QString("Authorization"), &results, &errors);
+        case myTypes::DEFINED_NOT_STARTED: {
+            emit exeDataBaseQuery(tempUser.getInsertLoggingLogQuery(tempUser.getId(), time, address, myTypes::SESSION_CREATED), QString("Authorization"), &results, &errors);
             break;
         }
-        case STARTED: {
-            emit exeDataBaseQuery(tempUser.getInsertLoggingLogQuery(tempUser.getId(), time, address, SESSION_OPENED), QString("Authorization"), &results, &errors);
+        case myTypes::STARTED: {
+            emit exeDataBaseQuery(tempUser.getInsertLoggingLogQuery(tempUser.getId(), time, address, myTypes::SESSION_OPENED), QString("Authorization"), &results, &errors);
             break;
         }
-        case RESTORED: {
-            emit exeDataBaseQuery(tempUser.getInsertLoggingLogQuery(tempUser.getId(), time, address, SESSION_RESTORED), QString("Authorization"), &results, &errors);
+        case myTypes::RESTORED: {
+            emit exeDataBaseQuery(tempUser.getInsertLoggingLogQuery(tempUser.getId(), time, address, myTypes::SESSION_RESTORED), QString("Authorization"), &results, &errors);
             break;
         }
-        case CLOSED_SAVED: {
-            emit exeDataBaseQuery(tempUser.getInsertLoggingLogQuery(tempUser.getId(), time, address, SESSION_CLOSED), QString("Authorization"), &results, &errors);
+        case myTypes::CLOSED_SAVED: {
+            emit exeDataBaseQuery(tempUser.getInsertLoggingLogQuery(tempUser.getId(), time, address, myTypes::SESSION_CLOSED), QString("Authorization"), &results, &errors);
             break;
         }
-        case ERROR: {
-            emit exeDataBaseQuery(tempUser.getInsertLoggingLogQuery(tempUser.getId(), time, address, SESSION_ERROR), QString("Authorization"), &results, &errors);
+        case myTypes::ERROR: {
+            emit exeDataBaseQuery(tempUser.getInsertLoggingLogQuery(tempUser.getId(), time, address, myTypes::SESSION_ERROR), QString("Authorization"), &results, &errors);
             break;
         }
         default: {
@@ -658,11 +658,11 @@ void c_actionExecutive::processUpdateRequest(processedThreadData processedReques
         }
 
         QMap<QString, QVariant> packetInfo;
-        packetInfo["thread_dest"] = static_cast<qint8>(CLINIC_SESSION_CONTROLLER);
+        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_SESSION_CONTROLLER);
         packetInfo["thread_id"] = processedRequest.thread_id;
-        packetInfo["req_type"] = static_cast<qint8>(REPLY);
+        packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
         packetInfo["type_flag"] = 0x00000000;
-        packetInfo["content"] = static_cast<qint32>(SESSION_STATE_UPDATE_CONFIRMATION);
+        packetInfo["content"] = static_cast<qint32>(myTypes::SESSION_STATE_UPDATE_CONFIRMATION);
 
         packetInfo["ref_md5"] = QJsonValue::fromVariant( processedRequest.md5Hash.toHex() );
 
@@ -733,11 +733,11 @@ void c_actionExecutive::processUpdateRequest(processedThreadData processedReques
         emit newLog( QString("Update confirmation: Session close_time succesfully updated.\n") );
 
         QMap<QString, QVariant> packetInfo;
-        packetInfo["thread_dest"] = static_cast<qint8>(CLINIC_SESSION_CONTROLLER);
+        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_SESSION_CONTROLLER);
         packetInfo["thread_id"] = processedRequest.thread_id;
-        packetInfo["req_type"] = static_cast<qint8>(REPLY);
+        packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
         packetInfo["type_flag"] = 0x00000000;
-        packetInfo["content"] = static_cast<qint32>(SESSION_CLOSE_TIME_UPDATE_CONFIRMATION);
+        packetInfo["content"] = static_cast<qint32>(myTypes::SESSION_CLOSE_TIME_UPDATE_CONFIRMATION);
 
         packetInfo["ref_md5"] = QJsonValue::fromVariant( processedRequest.md5Hash.toHex() );
 
@@ -753,18 +753,18 @@ void c_actionExecutive::processUpdateRequest(processedThreadData processedReques
     }
 }
 
-void c_actionExecutive::processErrors(QMap<QString, processedThreadData> *errors)
+void c_actionExecutive::processErrors(QMap<QString, myStructures::processedThreadData> *errors)
 {
     c_myParser parser;
 
     QList< QMap<QString,QVariant> > dataForJSON;
 
     QMap<QString, QVariant> packetInfo;
-    packetInfo["thread_dest"] = static_cast<qint8>(CLINIC_ERROR_CONTROLLER);
+    packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_ERROR_CONTROLLER);
     packetInfo["thread_id"] = errors->first().thread_id;
-    packetInfo["req_type"] = static_cast<qint8>(REPLY);
+    packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
     packetInfo["type_flag"] = 0x00000001;
-    packetInfo["content"] = static_cast<qint32>(ERRORS);
+    packetInfo["content"] = static_cast<qint32>(myTypes::ERRORS);
     packetInfo["ref_md5"] = QJsonValue::fromVariant( errors->first().md5Hash.toHex() );
 
     QMap<QString, QVariant> map;
@@ -795,7 +795,7 @@ void c_actionExecutive::setProcessingMode(bool newProcessingMode)
     processingMode = newProcessingMode;
 }
 
-void c_actionExecutive::processRequests(QMap<QString, processedThreadData> *processedRequestErrors)
+void c_actionExecutive::processRequests(QMap<QString, myStructures::processedThreadData> *processedRequestErrors)
 {
     while(receivedDataFromClients.length() > 0)
     {
@@ -804,43 +804,43 @@ void c_actionExecutive::processRequests(QMap<QString, processedThreadData> *proc
         // obsługa żądań
 
         switch (getReceivedDataFromClients()[0].req_type) {
-        case PING:
+        case myTypes::PING:
         {
 
         }
-        case REPLY:
+        case myTypes::REPLY:
         {
 
         }
-        case MESSAGE:
+        case myTypes::MESSAGE:
         {
             processMessageRequest(receivedDataFromClients.takeAt(0), processedRequestErrors);
             break;
         }
-        case GET:
+        case myTypes::GET:
         {
             processGetRequest(receivedDataFromClients.takeAt(0), processedRequestErrors);
             break;
         }
-        case REQUEST:
+        case myTypes::REQUEST:
         {
             processRequestRequest(receivedDataFromClients.takeAt(0), processedRequestErrors);
             break;
         }
-        case UPDATE:
+        case myTypes::UPDATE:
         {
             processUpdateRequest(receivedDataFromClients.takeAt(0), processedRequestErrors);
             break;
         }
-        case DELETE:
+        case myTypes::DELETE:
         {
 
         }
-        case SEND:
+        case myTypes::SEND:
         {
 
         }
-        case CONFIRM:
+        case myTypes::CONFIRM:
         {
             processConfirmRequest(receivedDataFromClients.takeAt(0), processedRequestErrors);
             break;
@@ -862,12 +862,12 @@ void c_actionExecutive::processRequests(QMap<QString, processedThreadData> *proc
     setProcessingMode(false);
 }
 
-const QList<processedThreadData> &c_actionExecutive::getReceivedDataFromClients() const
+const QList<myStructures::processedThreadData> &c_actionExecutive::getReceivedDataFromClients() const
 {
     return receivedDataFromClients;
 }
 
-void c_actionExecutive::setReceivedDataFromClients(const QList<processedThreadData> &newReceivedDataFromClients)
+void c_actionExecutive::setReceivedDataFromClients(const QList<myStructures::processedThreadData> &newReceivedDataFromClients)
 {
     receivedDataFromClients = newReceivedDataFromClients;
 }

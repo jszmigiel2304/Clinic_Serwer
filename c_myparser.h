@@ -27,7 +27,7 @@ public:
 
 
     QPair<QByteArray, QByteArray> ParseReceivedPacket(quint64 size, QByteArray data/*, qintptr socketDescriptor*/);
-    threadData ParseJsonPacket(QByteArray json, qintptr socketDescriptor);
+    myStructures::threadData ParseJsonPacket(QByteArray json, qintptr socketDescriptor);
 
 
 
@@ -38,11 +38,11 @@ public:
 //    QByteArray prepareDataForReplyPacket(threadData data);
 
 
-    void parseJsonForAuthenticateData(const QJsonDocument *json, JsonContent *content, qint32 *id, QString *name, QByteArray *password, QMap<QString, QVariant> *additionalData = nullptr);
-    void parseJsonForAuthenticateData(const QJsonDocument *json, JsonContent *content, QString *name, QByteArray *password, QMap<QString, QVariant> *additionalData = nullptr);
-    void parseJsonForAuthenticateData(const QJsonDocument *json, JsonContent *content, authenticator *auth, QMap<QString, QVariant> *additionalData = nullptr);
-    void parseJsonForMessaegeText(const QJsonDocument *json, JsonContent *content, QString *message);
-    void parseJsonForBinaryData(const QJsonDocument *json, JsonContent *content, QByteArray *binaries);
+    void parseJsonForAuthenticateData(const QJsonDocument *json, myTypes::JsonContent *content, qint32 *id, QString *name, QByteArray *password, QMap<QString, QVariant> *additionalData = nullptr);
+    void parseJsonForAuthenticateData(const QJsonDocument *json, myTypes::JsonContent *content, QString *name, QByteArray *password, QMap<QString, QVariant> *additionalData = nullptr);
+    void parseJsonForAuthenticateData(const QJsonDocument *json, myTypes::JsonContent *content, myStructures::authenticator *auth, QMap<QString, QVariant> *additionalData = nullptr);
+    void parseJsonForMessaegeText(const QJsonDocument *json, myTypes::JsonContent *content, QString *message);
+    void parseJsonForBinaryData(const QJsonDocument *json, myTypes::JsonContent *content, QByteArray *binaries);
     void parseJsonConfirmation(const QJsonDocument *json, QMap<QString, QVariant> *confirmationData);
 
 

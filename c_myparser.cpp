@@ -23,9 +23,9 @@ QPair<QByteArray, QByteArray> c_myParser::ParseReceivedPacket(quint64 size, QByt
     return pair;
 }
 
-threadData c_myParser::ParseJsonPacket(QByteArray json, qintptr socketDescriptor)
+myStructures::threadData c_myParser::ParseJsonPacket(QByteArray json, qintptr socketDescriptor)
 {
-    threadData packetData;
+    myStructures::threadData packetData;
 
     packetData.socketDescriptor = socketDescriptor;
 
@@ -33,7 +33,7 @@ threadData c_myParser::ParseJsonPacket(QByteArray json, qintptr socketDescriptor
     QJsonDocument jsonDoc = QJsonDocument::fromJson(json, &error);
 
     if (error.error != QJsonParseError::NoError) {
-        packetData.content = ERRORS;
+        packetData.content = myTypes::ERRORS;
         QList<QMap<QString, QVariant>> attData;
         QMap<QString, QVariant> error;
         error["error_0"] = QString("JSON reading error.");
@@ -44,11 +44,11 @@ threadData c_myParser::ParseJsonPacket(QByteArray json, qintptr socketDescriptor
     QJsonObject mainObject = jsonDoc.object();
 
 
-    packetData.thread_dest = static_cast<ThreadDestination>( mainObject["thread_dest"].toInteger() );
+    packetData.thread_dest = static_cast<myTypes::ThreadDestination>( mainObject["thread_dest"].toInteger() );
     packetData.thread_id = mainObject["thread_id"].toInteger();
-    packetData.req_type = static_cast<RequestType>( mainObject["req_type"].toInteger() );
+    packetData.req_type = static_cast<myTypes::RequestType>( mainObject["req_type"].toInteger() );
     packetData.type_flag = mainObject["type_flag"].toInteger();
-    packetData.content = static_cast<JsonContent>( mainObject["content"].toInteger() );
+    packetData.content = static_cast<myTypes::JsonContent>( mainObject["content"].toInteger() );
 
 
     QJsonArray dataArray = mainObject["data"].toArray();
@@ -69,11 +69,11 @@ threadData c_myParser::ParseJsonPacket(QByteArray json, qintptr socketDescriptor
 
 
 
-void c_myParser::parseJsonForAuthenticateData(const QJsonDocument *json, JsonContent *content, qint32 *id, QString *name, QByteArray *password, QMap<QString, QVariant> *additionalData)
+void c_myParser::parseJsonForAuthenticateData(const QJsonDocument *json, myTypes::JsonContent *content, qint32 *id, QString *name, QByteArray *password, QMap<QString, QVariant> *additionalData)
 {
     QJsonObject mainObject = json->object();
 
-    *content = static_cast<JsonContent>( mainObject["CONTENT"].toInteger() );
+    *content = static_cast<myTypes::JsonContent>( mainObject["CONTENT"].toInteger() );
 
     QJsonObject resultObject = mainObject["RESULTS"].toObject();   
 
@@ -98,11 +98,11 @@ void c_myParser::parseJsonForAuthenticateData(const QJsonDocument *json, JsonCon
 
 }
 
-void c_myParser::parseJsonForAuthenticateData(const QJsonDocument *json, JsonContent *content, QString *name, QByteArray *password, QMap<QString, QVariant> *additionalData)
+void c_myParser::parseJsonForAuthenticateData(const QJsonDocument *json, myTypes::JsonContent *content, QString *name, QByteArray *password, QMap<QString, QVariant> *additionalData)
 {
     QJsonObject mainObject = json->object();
 
-    *content = static_cast<JsonContent>( mainObject["CONTENT"].toInteger() );
+    *content = static_cast<myTypes::JsonContent>( mainObject["CONTENT"].toInteger() );
 
     QJsonObject resultObject = mainObject["RESULTS"].toObject();
 
@@ -122,11 +122,11 @@ void c_myParser::parseJsonForAuthenticateData(const QJsonDocument *json, JsonCon
     }
 }
 
-void c_myParser::parseJsonForAuthenticateData(const QJsonDocument *json, JsonContent *content, authenticator *auth, QMap<QString, QVariant> *additionalData)
+void c_myParser::parseJsonForAuthenticateData(const QJsonDocument *json, myTypes::JsonContent *content, myStructures::authenticator *auth, QMap<QString, QVariant> *additionalData)
 {
     QJsonObject mainObject = json->object();
 
-    *content = static_cast<JsonContent>( mainObject["CONTENT"].toInteger() );
+    *content = static_cast<myTypes::JsonContent>( mainObject["CONTENT"].toInteger() );
 
     QJsonObject resultObject = mainObject["RESULTS"].toObject();
 
@@ -151,19 +151,19 @@ void c_myParser::parseJsonForAuthenticateData(const QJsonDocument *json, JsonCon
 
 }
 
-void c_myParser::parseJsonForMessaegeText(const QJsonDocument *json, JsonContent *content, QString *message)
+void c_myParser::parseJsonForMessaegeText(const QJsonDocument *json, myTypes::JsonContent *content, QString *message)
 {
     QJsonObject mainObject = json->object();
 
-    *content = static_cast<JsonContent>( mainObject["CONTENT"].toInteger() );
+    *content = static_cast<myTypes::JsonContent>( mainObject["CONTENT"].toInteger() );
     *message = mainObject["RESULTS"].toString();
 }
 
-void c_myParser::parseJsonForBinaryData(const QJsonDocument *json, JsonContent *content, QByteArray *binaries)
+void c_myParser::parseJsonForBinaryData(const QJsonDocument *json, myTypes::JsonContent *content, QByteArray *binaries)
 {
     QJsonObject mainObject = json->object();
 
-    *content = static_cast<JsonContent>( mainObject["CONTENT"].toInteger() );
+    *content = static_cast<myTypes::JsonContent>( mainObject["CONTENT"].toInteger() );
 
     QJsonObject resultObject = mainObject["RESULTS"].toObject();
 

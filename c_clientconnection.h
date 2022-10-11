@@ -48,29 +48,29 @@ public:
 signals:
     void error(QSslSocket::SocketError error);
     void dataRead(quint64 size, QByteArray data, qintptr socketDescriptor);
-    void dataParsed(processedThreadData data);
+    void dataParsed(myStructures::processedThreadData data);
     void disconnect2();
     void connectionFinished(c_ClientConnection * client);
     void newClient(c_ClientConnection * client);
     void newLog(QString log);
     void newLogToFile(QString sender, QString notes, QByteArray data);    
     void reply(quint64 size, QByteArray data);
-    void sendDataToClientSignal(packet packet);
+    void sendDataToClientSignal(myStructures::packet packet);
 
 public slots:
     void readyRead();
     void disconnected();
 //    void sendDataToClient(quint64 size, QByteArray data);
-    void sendDataToClient(packet packet);
+    void sendDataToClient(myStructures::packet packet);
     void replyReceived(QByteArray processedRequestMd5Hash, QByteArray json);
 
 private:
     c_actionExecutive * executive;
     QTimer * waitForFinishProcessingTimer;
 
-    QList<processedPacket> processedPackets;
+    QList<myStructures::processedPacket> processedPackets;
 
-    bool replyRequired(threadData * request);
+    bool replyRequired(myStructures::threadData * request);
 
 private slots:
     void waitForFinishProcessingTimerTimeOut();

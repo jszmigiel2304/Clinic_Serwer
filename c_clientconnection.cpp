@@ -23,9 +23,9 @@ c_ClientConnection::c_ClientConnection(qintptr ID, QObject *parent)
     connect(socket, SIGNAL(readyRead()), this, SLOT(readyRead()), Qt::DirectConnection);
     connect(socket, SIGNAL(disconnected()), this, SLOT(disconnected()), Qt::QueuedConnection);
 
-    connect( this, SIGNAL(sendDataToClientSignal(packet)), this, SLOT(sendDataToClient(packet)), Qt::DirectConnection );
+    connect( this, SIGNAL(sendDataToClientSignal(myStructures::packet)), this, SLOT(sendDataToClient(myStructures::packet)), Qt::DirectConnection );
 
-    connect(this, SIGNAL(dataParsed(processedThreadData)), this->executive, SLOT(dataReceived(processedThreadData)));
+    connect(this, SIGNAL(dataParsed(myStructures::processedThreadData)), this->executive, SLOT(dataReceived(myStructures::processedThreadData)));
     connect(this, SIGNAL(dataRead(quint64, QByteArray, qintptr)), this, SLOT(parseReceivedPacket(quint64, QByteArray, qintptr)));
 //    connect(this->executive, SIGNAL(reply(quint64, QByteArray)), this, SLOT(sendDataToClient(quint64, QByteArray)), Qt::DirectConnection);
     connect(this->executive, SIGNAL(replyReady(QByteArray, QByteArray)), this, SLOT(replyReceived(QByteArray, QByteArray)), Qt::DirectConnection);
@@ -102,7 +102,7 @@ void c_ClientConnection::replyReceived(QByteArray processedRequestMd5Hash, QByte
 {
     c_myParser parser;
 
-    packet packet;
+    myStructures::packet packet;
     packet.md5_hash = parser.getJsonMD5Hash( QJsonDocument::fromJson(json) );
     //packet.packet_to_send = json;
 
@@ -117,7 +117,7 @@ void c_ClientConnection::replyReceived(QByteArray processedRequestMd5Hash, QByte
     removeFromprocessedPackets(processedRequestMd5Hash);
 }
 
-bool c_ClientConnection::replyRequired(threadData *request)
+bool c_ClientConnection::replyRequired(myStructures::threadData *request)
 {
     bool replyRequired = true;
 
@@ -135,9 +135,9 @@ void c_ClientConnection::parseReceivedPacket(quint64 size, QByteArray data, qint
     c_myParser parser;
 
     QPair<QByteArray, QByteArray> pair = parser.ParseReceivedPacket(size, data);
-    threadData jsonPacketData = parser.ParseJsonPacket( pair.second, socketDescriptor );
+    myStructures::threadData jsonPacketData = parser.ParseJsonPacket( pair.second, socketDescriptor );
 
-    processedThreadData processedRequest;
+    myStructures::processedThreadData processedRequest;
     processedRequest.md5Hash = pair.first;
     processedRequest.socketDescriptor = jsonPacketData.socketDescriptor;
     processedRequest.content = jsonPacketData.content;
@@ -147,7 +147,7 @@ void c_ClientConnection::parseReceivedPacket(quint64 size, QByteArray data, qint
     processedRequest.type_flag = jsonPacketData.type_flag;
     processedRequest.data = jsonPacketData.data;
 
-    processedPacket processedPacket;
+    myStructures::processedPacket processedPacket;
     processedPacket.md5_hash = pair.first;
     processedPacket.data = jsonPacketData;
     processedPacket.wait_for_reply = replyRequired(&jsonPacketData);
@@ -156,13 +156,13 @@ void c_ClientConnection::parseReceivedPacket(quint64 size, QByteArray data, qint
 
     /*----------------------------------------------------*/
 
-    packet packet;
+    myStructures::packet packet;
     QMap<QString, QVariant> packetInfo;
-    packetInfo["thread_dest"] = static_cast<qint8>(CLINIC_CONNECTION_CONTROLLER);
+    packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_CONNECTION_CONTROLLER);
     packetInfo["thread_id"] = processedRequest.thread_id;
-    packetInfo["req_type"] = static_cast<qint8>(RECEIVE_CONFIRMATION);
+    packetInfo["req_type"] = static_cast<qint8>(myTypes::RECEIVE_CONFIRMATION);
     packetInfo["type_flag"] = 0x00000001;
-    packetInfo["content"] = static_cast<qint32>(PACKET_RECEIVE_CONFIRMATION);
+    packetInfo["content"] = static_cast<qint32>(myTypes::PACKET_RECEIVE_CONFIRMATION);
 
     QJsonDocument receiveConfirmation = parser.prepareReceiveConfirmationJSON(packetInfo, processedRequest.md5Hash);
 
@@ -277,7 +277,7 @@ void c_ClientConnection::disconnected()
     emit connectionFinished(this);
 }
 
-void c_ClientConnection::sendDataToClient(packet packet)
+void c_ClientConnection::sendDataToClient(myStructures::packet packet)
 {
     /*----------------------SEND 1--------------------------*/
 //    QDataStream socketStream(socket);
