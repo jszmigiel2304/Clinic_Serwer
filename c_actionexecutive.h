@@ -7,6 +7,7 @@
 #include "c_mysqldatabasecontroller.h"
 #include "c_myparser.h"
 #include "c_user.h"
+#include "c_employee.h"
 
 #include <QObject>
 #include <QAuthenticator>
@@ -72,6 +73,7 @@ signals:
     void replyReady(QByteArray processedRequestMd5Hash, QByteArray json);
 //    void reply(quint64 size, QByteArray data);
     void exeDataBaseQuery(QString query, QString destDatabase, QList<QMap<QString,QVariant>> * results, QStringList * errors = nullptr);
+    void exeDataBaseQuery(QString query, QString destDatabase, QString name, QString password, QList<QMap<QString,QVariant>> * results, QStringList * errors = nullptr);
     void newLog(QString log);
     void newLogToFile(QString sender, QString notes, QByteArray data);
     void processingErrors(QMap<QString, myStructures::processedThreadData> * errors);

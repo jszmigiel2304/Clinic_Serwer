@@ -28,6 +28,7 @@ public:
     QString getSelectIdQuery() const;
     QString getSelectUserQuery() const;
     QString getSelectByNamePasswordUserQuery() const;
+    QString getSelectUserLogsQuery() const;
 
     QString getInsertLoggingLogQuery(qint32 id_user, QDateTime log_time, QHostAddress ip_address, myTypes::USER_LOG_DB_ACTIVITY activity) const;
 

@@ -74,6 +74,12 @@ QString c_User::getSelectByNamePasswordUserQuery() const
     return query;
 }
 
+QString c_User::getSelectUserLogsQuery() const
+{
+    QString query = QString(GET_USER_LOGS_AUTH_DB).arg(getId());
+    return query;
+}
+
 void c_User::setId(qint32 newId)
 {
     id = newId;

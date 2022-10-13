@@ -44,6 +44,7 @@ void c_actionExecutive::setDataBasesCtrlr(c_MySqlDatabaseController *newDataBase
 {
     dataBasesCtrlr = newDataBasesCtrlr;
     connect( this, SIGNAL(exeDataBaseQuery(QString, QString, QList<QMap<QString,QVariant>> *,QStringList *)), dataBasesCtrlr, SLOT(exe(QString, QString, QList<QMap<QString,QVariant>> *, QStringList *)) );
+    connect( this, SIGNAL(exeDataBaseQuery(QString, QString, QString, QString, QList<QMap<QString,QVariant>> *,QStringList *)), dataBasesCtrlr, SLOT(exe(QString, QString, QString, QList<QMap<QString,QVariant>> *, QStringList *)) );
 }
 
 void c_actionExecutive::dataReceived(myStructures::processedThreadData data)
@@ -128,11 +129,11 @@ void c_actionExecutive::processGetRequest(myStructures::processedThreadData proc
 
 
         if(tempUser.getLogin().isEmpty() || tempUser.getPassword().isEmpty()) {
-            (*processedRequestErrors)["INCORRECT_LOGIN_DATA\n"] = processedRequest;
+            (*processedRequestErrors)["INCORRECT_AUTHORIZATION_DATA\n"] = processedRequest;
             break;
         }
 
-        emit exeDataBaseQuery(tempUser.getSelectByNamePasswordUserQuery(), QString("Authorization"), &results, &errors);
+        emit exeDataBaseQuery(tempUser.getSelectByNamePasswordUserQuery(), QString("Authorization"), name, encryptedPassword, &results, &errors);
 
 
         if( !errors.empty() ) {
@@ -156,6 +157,215 @@ void c_actionExecutive::processGetRequest(myStructures::processedThreadData proc
     }
     case 0x00000002: //GET employee properties from database
     {
+        c_myParser parser;
+
+        QString name = processedRequest.data[0]["name"].toString();
+        QString encryptedPassword = processedRequest.data[0]["encryptedPassword"].toString();
+
+        c_User tempUser(name, encryptedPassword);
+
+        QList< QMap<QString,QVariant> > results;
+        QStringList errors;
+
+
+        if(tempUser.getLogin().isEmpty() || tempUser.getPassword().isEmpty()) {
+            (*processedRequestErrors)["INCORRECT_AUTHORIZATION_DATA\n"] = processedRequest;
+            break;
+        }
+
+        c_employee tempEmployee;
+
+        emit exeDataBaseQuery(tempEmployee.getSelectEmployeePropertiesByUserNameQuery(tempUser.getLogin()), QString("Clinic"), name, encryptedPassword, &results, &errors);
+
+
+        if( !errors.empty() ) {
+            foreach(QString err, errors) {
+                (*processedRequestErrors)[err] = processedRequest;
+                break;
+            }
+        }
+
+        QMap<QString, QVariant> packetInfo;
+        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
+        packetInfo["thread_id"] = processedRequest.thread_id;
+        packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
+        packetInfo["type_flag"] = 0x00000001;
+        packetInfo["content"] = static_cast<qint32>(myTypes::EMPLOYEE_PROPERTIES_ANSWER);
+        packetInfo["ref_md5"] = QJsonValue::fromVariant( processedRequest.md5Hash.toHex() );
+
+        QJsonDocument replyJSON = parser.prepareJSON(packetInfo, results);
+        emit replyReady(processedRequest.md5Hash, replyJSON.toJson());
+        break;
+    }
+    case 0x00000003: //GET employee properties from database
+    {
+        c_myParser parser;
+
+        QString name = processedRequest.data[0]["name"].toString();
+        QString encryptedPassword = processedRequest.data[0]["encryptedPassword"].toString();
+        quint32 employee_id = processedRequest.data[0]["employee_id"].toUInt();
+
+        c_User tempUser(name, encryptedPassword);
+
+        QList< QMap<QString,QVariant> > results;
+        QStringList errors;
+
+
+        if(tempUser.getLogin().isEmpty() || tempUser.getPassword().isEmpty()) {
+            (*processedRequestErrors)["INCORRECT_AUTHORIZATION_DATA\n"] = processedRequest;
+            break;
+        }
+
+        c_employee tempEmployee;
+
+        emit exeDataBaseQuery(tempEmployee.getSelectEmployeePropertiesByIdQuery(employee_id), QString("Clinic"), name, encryptedPassword, &results, &errors);
+
+
+        if( !errors.empty() ) {
+            foreach(QString err, errors) {
+                (*processedRequestErrors)[err] = processedRequest;
+                break;
+            }
+        }
+
+        QMap<QString, QVariant> packetInfo;
+        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
+        packetInfo["thread_id"] = processedRequest.thread_id;
+        packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
+        packetInfo["type_flag"] = 0x00000001;
+        packetInfo["content"] = static_cast<qint32>(myTypes::EMPLOYEE_PROPERTIES_ANSWER);
+        packetInfo["ref_md5"] = QJsonValue::fromVariant( processedRequest.md5Hash.toHex() );
+
+        QJsonDocument replyJSON = parser.prepareJSON(packetInfo, results);
+        emit replyReady(processedRequest.md5Hash, replyJSON.toJson());
+        break;
+    }
+    case 0x00000004: //GET user logs from database
+    {
+        c_myParser parser;
+
+        qint32 id = processedRequest.data[0]["id"].toInt();
+        QString name = processedRequest.data[0]["name"].toString();
+        QString encryptedPassword = processedRequest.data[0]["encryptedPassword"].toString();
+
+        c_User tempUser(id, name, encryptedPassword);
+
+        QList< QMap<QString,QVariant> > results;
+        QStringList errors;
+
+
+        if(tempUser.getLogin().isEmpty() || tempUser.getPassword().isEmpty()) {
+            (*processedRequestErrors)["INCORRECT_AUTHORIZATION_DATA\n"] = processedRequest;
+            break;
+        }
+
+        emit exeDataBaseQuery(tempUser.getSelectUserLogsQuery(), QString("Authorization"), name, encryptedPassword, &results, &errors);
+
+
+        if( !errors.empty() ) {
+            foreach(QString err, errors) {
+                (*processedRequestErrors)[err] = processedRequest;
+                break;
+            }
+        }
+
+        QMap<QString, QVariant> packetInfo;
+        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
+        packetInfo["thread_id"] = processedRequest.thread_id;
+        packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
+        packetInfo["type_flag"] = 0x00000001;
+        packetInfo["content"] = static_cast<qint32>(myTypes::USER_LOGS_ANSWER);
+        packetInfo["ref_md5"] = QJsonValue::fromVariant( processedRequest.md5Hash.toHex() );
+
+        QJsonDocument replyJSON = parser.prepareJSON(packetInfo, results);
+        emit replyReady(processedRequest.md5Hash, replyJSON.toJson());
+        break;
+    }
+    case 0x00000005: //GET user + employee logs from database
+    {
+        c_myParser parser;
+
+        qint32 id = processedRequest.data[0]["id"].toInt();
+        QString name = processedRequest.data[0]["name"].toString();
+        QString encryptedPassword = processedRequest.data[0]["encryptedPassword"].toString();
+
+        c_User tempUser(id, name, encryptedPassword);
+
+        QList< QMap<QString,QVariant> > results;
+        QStringList errors;
+
+
+        if(tempUser.getLogin().isEmpty() || tempUser.getPassword().isEmpty()) {
+            (*processedRequestErrors)["INCORRECT_AUTHORIZATION_DATA\n"] = processedRequest;
+            break;
+        }
+
+        c_employee tempEmployee;
+
+        emit exeDataBaseQuery(tempUser.getSelectUserLogsQuery(), QString("Authorization"), name, encryptedPassword, &results, &errors);
+        emit exeDataBaseQuery(tempEmployee.getSelectEmployeeLogsByUserNameQuery(id), QString("Clinic"), name, encryptedPassword, &results, &errors);
+
+
+        if( !errors.empty() ) {
+            foreach(QString err, errors) {
+                (*processedRequestErrors)[err] = processedRequest;
+                break;
+            }
+        }
+
+        QMap<QString, QVariant> packetInfo;
+        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
+        packetInfo["thread_id"] = processedRequest.thread_id;
+        packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
+        packetInfo["type_flag"] = 0x00000001;
+        packetInfo["content"] = static_cast<qint32>(myTypes::USER_EMPLOYEE_LOGS_ANSWER);
+        packetInfo["ref_md5"] = QJsonValue::fromVariant( processedRequest.md5Hash.toHex() );
+
+        QJsonDocument replyJSON = parser.prepareJSON(packetInfo, results);
+        emit replyReady(processedRequest.md5Hash, replyJSON.toJson());
+        break;
+    }
+    case 0x00000006: //GET employee logs from database
+    {
+        c_myParser parser;
+
+        qint32 employee_id = processedRequest.data[0]["employee_id"].toInt();
+        QString name = processedRequest.data[0]["name"].toString();
+        QString encryptedPassword = processedRequest.data[0]["encryptedPassword"].toString();
+
+        c_User tempUser(name, encryptedPassword);
+
+        QList< QMap<QString,QVariant> > results;
+        QStringList errors;
+
+
+        if(tempUser.getLogin().isEmpty() || tempUser.getPassword().isEmpty()) {
+            (*processedRequestErrors)["INCORRECT_AUTHORIZATION_DATA\n"] = processedRequest;
+            break;
+        }
+
+        c_employee tempEmployee;
+
+        emit exeDataBaseQuery(tempEmployee.getSelectEmployeeLogsByEmployeeIdQuery(employee_id), QString("Clinic"), name, encryptedPassword, &results, &errors);
+
+
+        if( !errors.empty() ) {
+            foreach(QString err, errors) {
+                (*processedRequestErrors)[err] = processedRequest;
+                break;
+            }
+        }
+
+        QMap<QString, QVariant> packetInfo;
+        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
+        packetInfo["thread_id"] = processedRequest.thread_id;
+        packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
+        packetInfo["type_flag"] = 0x00000001;
+        packetInfo["content"] = static_cast<qint32>(myTypes::EMPLOYEE_LOGS_ANSWER);
+        packetInfo["ref_md5"] = QJsonValue::fromVariant( processedRequest.md5Hash.toHex() );
+
+        QJsonDocument replyJSON = parser.prepareJSON(packetInfo, results);
+        emit replyReady(processedRequest.md5Hash, replyJSON.toJson());
         break;
     }
     case 0x00000100:  //getSessionssettings from server+database

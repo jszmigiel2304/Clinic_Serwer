@@ -173,6 +173,32 @@ void c_MySqlDatabaseController::exe(QString query, QString destDatabase, QList< 
     //return resultsList;
 }
 
+void c_MySqlDatabaseController::exe(QString query, QString destDatabase, QString name, QString password, QList<QMap<QString, QVariant> > *results, QStringList *errors)
+{
+    if (databases[destDatabase].open(name, QString("md5<%1>").arg(password)))
+    {
+        QSqlQuery q(query, databases[destDatabase]);
+
+        while (q.next()) {
+                QSqlRecord record = q.record();
+
+                QMap<QString,QVariant> map;
+                for (int i=0; i<record.count(); ++i) {
+                    map[record.fieldName(i)] = q.value(i);
+                    //params.insert(record.fieldName(i++), q.value(i));
+                }
+
+                results->push_back(map);
+            }
+
+        QString err = q.lastError().text();
+
+        databases[destDatabase].close();
+    } else {
+        errors->push_back(QString("%1 Database opening error\n").arg(destDatabase));
+    }
+}
+
 void c_MySqlDatabaseController::setAuthDbName(const QString &value)
 {
     authDbName = value;

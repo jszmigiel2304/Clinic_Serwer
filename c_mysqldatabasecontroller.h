@@ -79,6 +79,7 @@ public:
 
 public slots:
     void exe(QString query, QString destDatabase, QList<QMap<QString,QVariant>> * results, QStringList * errors = nullptr);
+    void exe(QString query, QString destDatabase, QString name, QString password, QList<QMap<QString,QVariant>> * results, QStringList * errors = nullptr);
 
 
 
