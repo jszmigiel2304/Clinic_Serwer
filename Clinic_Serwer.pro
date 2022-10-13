@@ -25,11 +25,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     c_actionexecutive.cpp \
+    c_employee.cpp \
     c_logscontroller.cpp \
     c_myfiles.cpp \
     c_myparser.cpp \
     c_sessioncontroller.cpp \
     c_user.cpp \
+    m_employee.cpp \
         main.cpp \
     w_logswindow.cpp \
         w_mainwindow.cpp \
@@ -55,12 +57,15 @@ SOURCES += \
 
 HEADERS += \
     c_actionexecutive.h \
+    c_employee.h \
     c_logscontroller.h \
     c_myfiles.h \
     c_myparser.h \
     c_sessioncontroller.h \
     c_structures.h \
     c_user.h \
+    m_employee.h \
+    mcs_DbQueriesEmployee.h \
     mcs_DbQueriesSessionController.h \
     mcs_DbQueriesUser.h \
     w_logswindow.h \

@@ -114,6 +114,50 @@ void c_actionExecutive::processGetRequest(myStructures::processedThreadData proc
 
         break;
     }
+    case 0x00000001: //GET user properties from database
+    {
+        c_myParser parser;
+
+        QString name = processedRequest.data[0]["name"].toString();
+        QString encryptedPassword = processedRequest.data[0]["encryptedPassword"].toString();
+
+        c_User tempUser(name, encryptedPassword);
+
+        QList< QMap<QString,QVariant> > results;
+        QStringList errors;
+
+
+        if(tempUser.getLogin().isEmpty() || tempUser.getPassword().isEmpty()) {
+            (*processedRequestErrors)["INCORRECT_LOGIN_DATA\n"] = processedRequest;
+            break;
+        }
+
+        emit exeDataBaseQuery(tempUser.getSelectByNamePasswordUserQuery(), QString("Authorization"), &results, &errors);
+
+
+        if( !errors.empty() ) {
+            foreach(QString err, errors) {
+                (*processedRequestErrors)[err] = processedRequest;
+                break;
+            }
+        }
+
+        QMap<QString, QVariant> packetInfo;
+        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
+        packetInfo["thread_id"] = processedRequest.thread_id;
+        packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
+        packetInfo["type_flag"] = 0x00000001;
+        packetInfo["content"] = static_cast<qint32>(myTypes::USER_PROPERTIES_ANSWER);
+        packetInfo["ref_md5"] = QJsonValue::fromVariant( processedRequest.md5Hash.toHex() );
+
+        QJsonDocument replyJSON = parser.prepareJSON(packetInfo, results);
+        emit replyReady(processedRequest.md5Hash, replyJSON.toJson());
+        break;
+    }
+    case 0x00000002: //GET employee properties from database
+    {
+        break;
+    }
     case 0x00000100:  //getSessionssettings from server+database
     {
 

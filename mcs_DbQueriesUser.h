@@ -2,6 +2,7 @@
 #define MCS_DBQUERIESUSER_H
 
 #define GET_USER_AUTH_DB "SELECT * FROM public.users WHERE public.users.id = %1 AND public.users.name = '%2' AND public.users.password = '\\x%3'"
+#define GET_USER_BY_NAME_PASSWORD_AUTH_DB "SELECT * FROM public.users WHERE public.users.name = '%1' AND public.users.password = '\\x%2'"
 #define GET_USER_ID_AUTH_DB "SELECT public.users.id FROM public.users WHERE public.users.name = '%1' AND public.users.password = '\\x%2'"
 
 #define ADD_LOGGING_LOG_AUTH_DB "INSERT INTO public.logs(id_user, log_time, ip_address, activity) VALUES(%1, '%2', '%3', %4)"
