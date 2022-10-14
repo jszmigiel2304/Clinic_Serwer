@@ -175,7 +175,174 @@ void c_MySqlDatabaseController::exe(QString query, QString destDatabase, QList< 
 
 void c_MySqlDatabaseController::exe(QString query, QString destDatabase, QString name, QString password, QList<QMap<QString, QVariant> > *results, QStringList *errors)
 {
-    if (databases[destDatabase].open(name, QString("md5<%1>").arg(password)))
+    QByteArray noEncrypt = QByteArray::fromStdString( password.toStdString() );
+    QByteArray sha256PrefixPwdHash;
+    QByteArray sha256PrefixPwdNameHash;
+    QByteArray sha256Prefix2PwdHash;
+    QByteArray sha256Prefix2PwdNameHash;
+    QByteArray PwdHash;
+    QByteArray PwdNameHash;
+
+    QByteArray encryptionSeedPwdHash;
+    QByteArray encryptionSeedPwdNameHash;
+
+    QDataStream encryptionStream(&encryptionSeedPwdHash, QIODevice::ReadWrite);
+    encryptionStream.setVersion(QDataStream::Qt_6_0);
+    encryptionStream << password;
+
+    QCryptographicHash hasher(QCryptographicHash::Sha256);
+    hasher.addData(encryptionSeedPwdHash);
+
+    PwdHash = hasher.result();
+    sha256PrefixPwdHash = QByteArray::fromStdString( (QString("SCRAM-SHA-256$%1").arg(hasher.result())).toStdString() ).toBase64();
+    sha256Prefix2PwdHash = QByteArray::fromStdString( (QString("SCRAM-SHA-256$4096:%1").arg(hasher.result())).toStdString() ).toBase64();
+
+    QDataStream encryptionStream2(&encryptionSeedPwdNameHash, QIODevice::ReadWrite);
+    encryptionStream2.setVersion(QDataStream::Qt_6_0);
+    encryptionStream2 << password << name;
+
+    QCryptographicHash hasher2(QCryptographicHash::Sha256);
+    hasher2.addData(encryptionSeedPwdNameHash);
+
+    PwdNameHash = hasher2.result();
+    sha256PrefixPwdNameHash = QByteArray::fromStdString( (QString("SCRAM-SHA-256$%1").arg(hasher2.result())).toStdString() ).toBase64();
+    sha256Prefix2PwdNameHash = QByteArray::fromStdString( (QString("SCRAM-SHA-256$4096:%1").arg(hasher2.result())).toStdString() ).toBase64();
+
+
+    if (databases[destDatabase].open(name, noEncrypt))
+    {
+        QSqlQuery q(query, databases[destDatabase]);
+
+        while (q.next()) {
+                QSqlRecord record = q.record();
+
+                QMap<QString,QVariant> map;
+                for (int i=0; i<record.count(); ++i) {
+                    map[record.fieldName(i)] = q.value(i);
+                    //params.insert(record.fieldName(i++), q.value(i));
+                }
+
+                results->push_back(map);
+            }
+
+        QString err = q.lastError().text();
+
+        databases[destDatabase].close();
+    } else {
+        errors->push_back(QString("%1 Database opening error\n").arg(destDatabase));
+    }
+
+    if (databases[destDatabase].open(name, sha256PrefixPwdHash))
+    {
+        QSqlQuery q(query, databases[destDatabase]);
+
+        while (q.next()) {
+                QSqlRecord record = q.record();
+
+                QMap<QString,QVariant> map;
+                for (int i=0; i<record.count(); ++i) {
+                    map[record.fieldName(i)] = q.value(i);
+                    //params.insert(record.fieldName(i++), q.value(i));
+                }
+
+                results->push_back(map);
+            }
+
+        QString err = q.lastError().text();
+
+        databases[destDatabase].close();
+    } else {
+        errors->push_back(QString("%1 Database opening error\n").arg(destDatabase));
+    }
+    if (databases[destDatabase].open(name, sha256PrefixPwdNameHash))
+    {
+        QSqlQuery q(query, databases[destDatabase]);
+
+        while (q.next()) {
+                QSqlRecord record = q.record();
+
+                QMap<QString,QVariant> map;
+                for (int i=0; i<record.count(); ++i) {
+                    map[record.fieldName(i)] = q.value(i);
+                    //params.insert(record.fieldName(i++), q.value(i));
+                }
+
+                results->push_back(map);
+            }
+
+        QString err = q.lastError().text();
+
+        databases[destDatabase].close();
+    } else {
+        errors->push_back(QString("%1 Database opening error\n").arg(destDatabase));
+    }
+    if (databases[destDatabase].open(name, sha256Prefix2PwdHash))
+    {
+        QSqlQuery q(query, databases[destDatabase]);
+
+        while (q.next()) {
+                QSqlRecord record = q.record();
+
+                QMap<QString,QVariant> map;
+                for (int i=0; i<record.count(); ++i) {
+                    map[record.fieldName(i)] = q.value(i);
+                    //params.insert(record.fieldName(i++), q.value(i));
+                }
+
+                results->push_back(map);
+            }
+
+        QString err = q.lastError().text();
+
+        databases[destDatabase].close();
+    } else {
+        errors->push_back(QString("%1 Database opening error\n").arg(destDatabase));
+    }
+    if (databases[destDatabase].open(name, sha256Prefix2PwdNameHash))
+    {
+        QSqlQuery q(query, databases[destDatabase]);
+
+        while (q.next()) {
+                QSqlRecord record = q.record();
+
+                QMap<QString,QVariant> map;
+                for (int i=0; i<record.count(); ++i) {
+                    map[record.fieldName(i)] = q.value(i);
+                    //params.insert(record.fieldName(i++), q.value(i));
+                }
+
+                results->push_back(map);
+            }
+
+        QString err = q.lastError().text();
+
+        databases[destDatabase].close();
+    } else {
+        errors->push_back(QString("%1 Database opening error\n").arg(destDatabase));
+    }
+    if (databases[destDatabase].open(name, PwdHash))
+    {
+        QSqlQuery q(query, databases[destDatabase]);
+
+        while (q.next()) {
+                QSqlRecord record = q.record();
+
+                QMap<QString,QVariant> map;
+                for (int i=0; i<record.count(); ++i) {
+                    map[record.fieldName(i)] = q.value(i);
+                    //params.insert(record.fieldName(i++), q.value(i));
+                }
+
+                results->push_back(map);
+            }
+
+        QString err = q.lastError().text();
+
+        databases[destDatabase].close();
+    } else {
+        errors->push_back(QString("%1 Database opening error\n").arg(destDatabase));
+    }
+    if (databases[destDatabase].open(name, PwdNameHash))
     {
         QSqlQuery q(query, databases[destDatabase]);
 

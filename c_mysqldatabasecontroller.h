@@ -16,6 +16,7 @@
 #include <QSqlResult>
 #include <QSqlError>
 #include <QSqlRecord>
+#include <QCryptographicHash>
 
 class c_MySqlDatabaseController : public QObject, public i_Watched
 {

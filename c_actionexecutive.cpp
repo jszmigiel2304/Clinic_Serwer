@@ -44,7 +44,7 @@ void c_actionExecutive::setDataBasesCtrlr(c_MySqlDatabaseController *newDataBase
 {
     dataBasesCtrlr = newDataBasesCtrlr;
     connect( this, SIGNAL(exeDataBaseQuery(QString, QString, QList<QMap<QString,QVariant>> *,QStringList *)), dataBasesCtrlr, SLOT(exe(QString, QString, QList<QMap<QString,QVariant>> *, QStringList *)) );
-    connect( this, SIGNAL(exeDataBaseQuery(QString, QString, QString, QString, QList<QMap<QString,QVariant>> *,QStringList *)), dataBasesCtrlr, SLOT(exe(QString, QString, QString, QList<QMap<QString,QVariant>> *, QStringList *)) );
+    connect( this, SIGNAL(exeDataBaseQuery(QString, QString, QString, QString, QList<QMap<QString,QVariant>> *,QStringList *)), dataBasesCtrlr, SLOT(exe(QString, QString, QString, QString, QList<QMap<QString,QVariant>> *, QStringList *)) );
 }
 
 void c_actionExecutive::dataReceived(myStructures::processedThreadData data)
