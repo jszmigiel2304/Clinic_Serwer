@@ -8,7 +8,7 @@
 #include <QDateTime>
 #include <QByteArray>
 
-#define SESSION_EXPIRE_TIME 10 // w sekundach
+#define SESSION_EXPIRE_TIME 600 // w sekundach
 
 namespace myTypes {
     enum SessionState {NOT_DEFINED = 0x00, DEFINED_NOT_STARTED = 0x01, STARTED = 0x10, RESTORED = 0x11, RESTARTED = 0x12,
