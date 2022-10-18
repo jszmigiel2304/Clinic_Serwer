@@ -7,6 +7,7 @@
 #include <QTime>
 #include <QDateTime>
 #include <QByteArray>
+#include <QHostAddress>
 
 #define SESSION_EXPIRE_TIME 600 // w sekundach
 
@@ -32,6 +33,8 @@ namespace myTypes {
 }
 
 namespace myStructures {
+
+
 struct authenticator {
     qint32 id;
     QString name;
@@ -101,6 +104,15 @@ struct processedPacket {
     threadData data;
     bool wait_for_reply = false;
 };
+
+struct myLog {
+    QDateTime time;
+    QHostAddress ip_address;
+    QString log_text;
+
+    bool operator<(const myLog& other) const { return time < other.time; }
+};
+
 }
 
 

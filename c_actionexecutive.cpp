@@ -277,7 +277,16 @@ void c_actionExecutive::processGetRequest(myStructures::processedThreadData proc
         packetInfo["content"] = static_cast<qint32>(myTypes::USER_LOGS_ANSWER);
         packetInfo["ref_md5"] = QJsonValue::fromVariant( processedRequest.md5Hash.toHex() );
 
-        QJsonDocument replyJSON = parser.prepareJSON(packetInfo, results);
+        QList<QMap<QString, QVariant>> logs;
+        for(int i=0; i<results.size(); i++) {
+            QMap<QString, QVariant> map;
+            map["log"] = results[i]["activity"].toString();
+            map["log_time"] = results[i]["activity"].toString();
+            map["ip_address"] = results[i]["activity"].toString();
+        }
+
+
+        QJsonDocument replyJSON = parser.prepareJSON(packetInfo, logs);
         emit replyReady(processedRequest.md5Hash, replyJSON.toJson());
         break;
     }
@@ -321,7 +330,16 @@ void c_actionExecutive::processGetRequest(myStructures::processedThreadData proc
         packetInfo["content"] = static_cast<qint32>(myTypes::USER_EMPLOYEE_LOGS_ANSWER);
         packetInfo["ref_md5"] = QJsonValue::fromVariant( processedRequest.md5Hash.toHex() );
 
-        QJsonDocument replyJSON = parser.prepareJSON(packetInfo, results);
+        QList<QMap<QString, QVariant>> logs;
+        for(int i=0; i<results.size(); i++) {
+            QMap<QString, QVariant> map;
+            map["log"] = results[i]["activity"].toString();
+            map["log_time"] = results[i]["log_time"].toString();
+            map["ip_address"] = results[i]["ip_address"].toString();
+            logs.append(map);
+        }
+
+        QJsonDocument replyJSON = parser.prepareJSON(packetInfo, logs);
         emit replyReady(processedRequest.md5Hash, replyJSON.toJson());
         break;
     }
@@ -364,7 +382,15 @@ void c_actionExecutive::processGetRequest(myStructures::processedThreadData proc
         packetInfo["content"] = static_cast<qint32>(myTypes::EMPLOYEE_LOGS_ANSWER);
         packetInfo["ref_md5"] = QJsonValue::fromVariant( processedRequest.md5Hash.toHex() );
 
-        QJsonDocument replyJSON = parser.prepareJSON(packetInfo, results);
+        QList<QMap<QString, QVariant>> logs;
+        for(int i=0; i<results.size(); i++) {
+            QMap<QString, QVariant> map;
+            map["log"] = results[i]["activity"].toString();
+            map["log_time"] = results[i]["activity"].toString();
+            map["ip_address"] = results[i]["activity"].toString();
+        }
+
+        QJsonDocument replyJSON = parser.prepareJSON(packetInfo, logs);
         emit replyReady(processedRequest.md5Hash, replyJSON.toJson());
         break;
     }
