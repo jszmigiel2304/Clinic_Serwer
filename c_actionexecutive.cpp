@@ -1,3 +1,4 @@
+
 #include "c_actionexecutive.h"
 #include "c_clientconnection.h"
 
@@ -330,16 +331,31 @@ void c_actionExecutive::processGetRequest(myStructures::processedThreadData proc
         packetInfo["content"] = static_cast<qint32>(myTypes::USER_EMPLOYEE_LOGS_ANSWER);
         packetInfo["ref_md5"] = QJsonValue::fromVariant( processedRequest.md5Hash.toHex() );
 
-        QList<QMap<QString, QVariant>> logs;
+        QList<myStructures::myLog> logs;
         for(int i=0; i<results.size(); i++) {
-            QMap<QString, QVariant> map;
-            map["log"] = results[i]["activity"].toString();
-            map["log_time"] = results[i]["log_time"].toString();
-            map["ip_address"] = results[i]["ip_address"].toString();
-            logs.append(map);
+            myStructures::myLog log = myStructures::myLog::fromMap(results[i]);
+            logs.append(log);
         }
 
-        QJsonDocument replyJSON = parser.prepareJSON(packetInfo, logs);
+        std::qsort(
+                logs.data(),
+                logs.size(),
+                sizeof(myStructures::myLog),
+                [](const void* x, const void* y) {
+                    const QDateTime arg1 = (*static_cast<const myStructures::myLog*>(x)).time;
+                    const QDateTime arg2 = (*static_cast<const myStructures::myLog*>(y)).time;
+                    if (arg1 < arg2) return 1;
+                    if (arg1 > arg2) return -1;
+                    return 0;
+                });
+
+        QList<QMap<QString, QVariant>> mapsLogs;
+        for(int i=0; i<logs.size(); i++) {
+            mapsLogs.append(logs[i].toMap());
+        }
+
+
+        QJsonDocument replyJSON = parser.prepareJSON(packetInfo, mapsLogs);
         emit replyReady(processedRequest.md5Hash, replyJSON.toJson());
         break;
     }

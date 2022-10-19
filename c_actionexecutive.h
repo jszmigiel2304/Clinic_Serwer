@@ -20,6 +20,7 @@
 #include <QJsonDocument>
 #include <QDateTime>
 #include <QPair>
+#include <QHostAddress>
 
 class c_actionExecutive : public QObject
 {
