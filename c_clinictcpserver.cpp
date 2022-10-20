@@ -247,12 +247,10 @@ void c_ClinicTcpServer::incomingConnection(qintptr socketDescriptor)
     connect(connection, SIGNAL(connectionFinished(c_ClientConnection*)), this, SLOT(removeClient2(c_ClientConnection*)));
 
 
-
-
     QString log = QString("incomingConnection(qintptr socketDescriptor) \n"
                           "connection->start(); \n");
 
-
+    addPendingConnection(connection->getSocket());
     emit connection->newClient(connection);
     emit newLog(log);
 }
