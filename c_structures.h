@@ -15,8 +15,9 @@ namespace myTypes {
     enum SessionState {NOT_DEFINED = 0x00, DEFINED_NOT_STARTED = 0x01, STARTED = 0x10, RESTORED = 0x11, RESTARTED = 0x12,
                        PAUSED_NOT_SAVED = 0x20, PAUSED_SAVED = 0x21, CLOSED_NOT_SAVED = 0x30, CLOSED_SAVED = 0x31, ERROR = 0xff
                       };
-    enum ThreadDestination {SERVER = 0x00, CLINIC = 0x10, CLINIC_CONNECTION_CONTROLLER = 0x11, CLINIC_SESSION_CONTROLLER = 0x12, CLINIC_LOGGED_USER_CONTROLLER = 0x13,
-                            SERVER_ERROR_CONTROLLE = 0x20, CLINIC_ERROR_CONTROLLER = 0x21};
+    enum ThreadDestination {SERVER = 0x00, CLINIC = 0x10, CLINIC_CONNECTION_CONTROLLER = 0x11, CLINIC_SESSION_CONTROLLER = 0x12, CLINIC_LOGGED_USER_CONTROLLER = 0x13, CLINIC_MODULE_PROCESS_CONTROLLER = 0x14,
+                            CLINIC_MODULE = 0x15, CLINIC_MODULE_ERROR = 0x16, CLINIC_MODULE_CONNECTION_CONTROLLER = 0x17,
+                            SERVER_ERROR_CONTROLLER = 0x20, CLINIC_ERROR_CONTROLLER = 0x21};
     enum RequestType {PING = 0x00, REPLY = 0x01, MESSAGE = 0x02, GET = 0x03, REQUEST = 0x04, UPDATE = 0x05, DELETE = 0x06, SEND = 0x07, CONFIRM = 0x08, RECEIVE_CONFIRMATION = 0x09};
     enum USER_LOG_DB_ACTIVITY { UNKNOW = -1, LOGGING_ERROR = 0x00000000, LOGGED_IN = 0x00000001, LOGGED_OUT = 0x00000002, SESSION_ERROR = 0x00010000,
                                    SESSION_CREATED = 0x00010001, SESSION_OPENED = 0x00010002, SESSION_CLOSED = 0x00010003, SESSION_RESTORED = 0x00010004, SESSION_FILE_UPDATED = 0x00010005};
@@ -64,6 +65,7 @@ struct threadData {
     myTypes::JsonContent content;
     quint32 thread_id;
     myTypes::ThreadDestination thread_dest;
+    myTypes::ThreadDestination thread_src;
     myTypes::RequestType req_type;
     quint32 type_flag;
     //quint64 data_size;
@@ -76,6 +78,7 @@ struct processedThreadData {
     myTypes::JsonContent content;
     quint32 thread_id;
     myTypes::ThreadDestination thread_dest;
+    myTypes::ThreadDestination thread_src;
     myTypes::RequestType req_type;
     quint32 type_flag;
     //quint64 data_size;

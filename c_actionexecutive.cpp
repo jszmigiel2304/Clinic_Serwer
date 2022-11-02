@@ -104,7 +104,9 @@ void c_actionExecutive::processGetRequest(myStructures::processedThreadData proc
 
 
         QMap<QString, QVariant> packetInfo;
-        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
+//        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
+        packetInfo["thread_dest"] = static_cast<qint8>(processedRequest.thread_src);
+        packetInfo["thread_src"] = static_cast<qint8>(myTypes::SERVER);
         packetInfo["thread_id"] = processedRequest.thread_id;
         packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
         packetInfo["type_flag"] = 0x00000001;
@@ -145,7 +147,9 @@ void c_actionExecutive::processGetRequest(myStructures::processedThreadData proc
         }
 
         QMap<QString, QVariant> packetInfo;
-        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
+//        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
+        packetInfo["thread_dest"] = processedRequest.thread_src;
+        packetInfo["thread_src"] = static_cast<qint8>(myTypes::SERVER);
         packetInfo["thread_id"] = processedRequest.thread_id;
         packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
         packetInfo["type_flag"] = 0x00000001;
@@ -187,7 +191,9 @@ void c_actionExecutive::processGetRequest(myStructures::processedThreadData proc
         }
 
         QMap<QString, QVariant> packetInfo;
-        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
+//        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
+        packetInfo["thread_dest"] = processedRequest.thread_src;
+        packetInfo["thread_src"] = static_cast<qint8>(myTypes::SERVER);
         packetInfo["thread_id"] = processedRequest.thread_id;
         packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
         packetInfo["type_flag"] = 0x00000001;
@@ -230,7 +236,9 @@ void c_actionExecutive::processGetRequest(myStructures::processedThreadData proc
         }
 
         QMap<QString, QVariant> packetInfo;
-        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
+//        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
+        packetInfo["thread_dest"] = processedRequest.thread_src;
+        packetInfo["thread_src"] = static_cast<qint8>(myTypes::SERVER);
         packetInfo["thread_id"] = processedRequest.thread_id;
         packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
         packetInfo["type_flag"] = 0x00000001;
@@ -271,7 +279,9 @@ void c_actionExecutive::processGetRequest(myStructures::processedThreadData proc
         }
 
         QMap<QString, QVariant> packetInfo;
-        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
+//        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
+        packetInfo["thread_dest"] = processedRequest.thread_src;
+        packetInfo["thread_src"] = static_cast<qint8>(myTypes::SERVER);
         packetInfo["thread_id"] = processedRequest.thread_id;
         packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
         packetInfo["type_flag"] = 0x00000001;
@@ -313,7 +323,7 @@ void c_actionExecutive::processGetRequest(myStructures::processedThreadData proc
         c_employee tempEmployee;
 
         emit exeDataBaseQuery(tempUser.getSelectUserLogsQuery(), QString("Authorization"), name, encryptedPassword, &results, &errors);
-        emit exeDataBaseQuery(tempEmployee.getSelectEmployeeLogsByUserNameQuery(id), QString("Clinic"), name, encryptedPassword, &results, &errors);
+        emit exeDataBaseQuery(tempEmployee.getSelectEmployeeLogsByUserNameQuery(name), QString("Clinic"), name, encryptedPassword, &results, &errors);
 
 
         if( !errors.empty() ) {
@@ -324,7 +334,9 @@ void c_actionExecutive::processGetRequest(myStructures::processedThreadData proc
         }
 
         QMap<QString, QVariant> packetInfo;
-        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
+//        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
+        packetInfo["thread_dest"] = processedRequest.thread_src;
+        packetInfo["thread_src"] = static_cast<qint8>(myTypes::SERVER);
         packetInfo["thread_id"] = processedRequest.thread_id;
         packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
         packetInfo["type_flag"] = 0x00000001;
@@ -391,7 +403,9 @@ void c_actionExecutive::processGetRequest(myStructures::processedThreadData proc
         }
 
         QMap<QString, QVariant> packetInfo;
-        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
+//        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
+        packetInfo["thread_dest"] = processedRequest.thread_src;
+        packetInfo["thread_src"] = static_cast<qint8>(myTypes::SERVER);
         packetInfo["thread_id"] = processedRequest.thread_id;
         packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
         packetInfo["type_flag"] = 0x00000001;
@@ -486,7 +500,9 @@ void c_actionExecutive::processGetRequest(myStructures::processedThreadData proc
         emit exeDataBaseQuery(tempUser.getInsertLoggingLogQuery(tempUser.getId(), time, address, myTypes::SESSION_CREATED), QString("Authorization"), &results, &errors);
 
         QMap<QString, QVariant> packetInfo;
-        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_SESSION_CONTROLLER);
+//        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_SESSION_CONTROLLER);
+        packetInfo["thread_dest"] = processedRequest.thread_src;
+        packetInfo["thread_src"] = static_cast<qint8>(myTypes::SERVER);
         packetInfo["thread_id"] = processedRequest.thread_id;
         packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
         packetInfo["type_flag"] = 0x00000001;
@@ -612,7 +628,9 @@ void c_actionExecutive::processRequestRequest(myStructures::processedThreadData 
         QList< QMap<QString,QVariant> > dataForJSON;
 
         QMap<QString, QVariant> packetInfo;
-        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
+//        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
+        packetInfo["thread_dest"] = processedRequest.thread_src;
+        packetInfo["thread_src"] = static_cast<qint8>(myTypes::SERVER);
         packetInfo["thread_id"] = processedRequest.thread_id;
         packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
         packetInfo["type_flag"] = 0x00000001;
@@ -701,7 +719,9 @@ void c_actionExecutive::processRequestRequest(myStructures::processedThreadData 
         QList< QMap<QString,QVariant> > dataForJSON;
 
         QMap<QString, QVariant> packetInfo;
-        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
+//        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
+        packetInfo["thread_dest"] = processedRequest.thread_src;
+        packetInfo["thread_src"] = static_cast<qint8>(myTypes::SERVER);
         packetInfo["thread_id"] = processedRequest.thread_id;
         packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
         packetInfo["type_flag"] = 0x00000001;
@@ -753,7 +773,9 @@ void c_actionExecutive::processRequestRequest(myStructures::processedThreadData 
         }
 
         QMap<QString, QVariant> packetInfo;
-        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
+//        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_LOGGED_USER_CONTROLLER);
+        packetInfo["thread_dest"] = processedRequest.thread_src;
+        packetInfo["thread_src"] = static_cast<qint8>(myTypes::SERVER);
         packetInfo["thread_id"] = processedRequest.thread_id;
         packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
         packetInfo["type_flag"] = 0x00000000;
@@ -845,7 +867,9 @@ void c_actionExecutive::processUpdateRequest(myStructures::processedThreadData p
 
 
         QMap<QString, QVariant> packetInfo;
-        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_SESSION_CONTROLLER);
+//        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_SESSION_CONTROLLER);
+        packetInfo["thread_dest"] = processedRequest.thread_src;
+        packetInfo["thread_src"] = static_cast<qint8>(myTypes::SERVER);
         packetInfo["thread_id"] = processedRequest.thread_id;
         packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
         packetInfo["type_flag"] = 0x00000000;
@@ -954,7 +978,9 @@ void c_actionExecutive::processUpdateRequest(myStructures::processedThreadData p
         }
 
         QMap<QString, QVariant> packetInfo;
-        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_SESSION_CONTROLLER);
+//        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_SESSION_CONTROLLER);
+        packetInfo["thread_dest"] = processedRequest.thread_src;
+        packetInfo["thread_src"] = static_cast<qint8>(myTypes::SERVER);
         packetInfo["thread_id"] = processedRequest.thread_id;
         packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
         packetInfo["type_flag"] = 0x00000000;
@@ -1029,7 +1055,9 @@ void c_actionExecutive::processUpdateRequest(myStructures::processedThreadData p
         emit newLog( QString("Update confirmation: Session close_time succesfully updated.\n") );
 
         QMap<QString, QVariant> packetInfo;
-        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_SESSION_CONTROLLER);
+//        packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_SESSION_CONTROLLER);
+        packetInfo["thread_dest"] = processedRequest.thread_src;
+        packetInfo["thread_src"] = static_cast<qint8>(myTypes::SERVER);
         packetInfo["thread_id"] = processedRequest.thread_id;
         packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
         packetInfo["type_flag"] = 0x00000000;
@@ -1057,6 +1085,7 @@ void c_actionExecutive::processErrors(QMap<QString, myStructures::processedThrea
 
     QMap<QString, QVariant> packetInfo;
     packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_ERROR_CONTROLLER);
+    packetInfo["thread_src"] = static_cast<qint8>(myTypes::SERVER);
     packetInfo["thread_id"] = errors->first().thread_id;
     packetInfo["req_type"] = static_cast<qint8>(myTypes::REPLY);
     packetInfo["type_flag"] = 0x00000001;

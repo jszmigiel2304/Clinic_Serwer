@@ -143,6 +143,7 @@ void c_ClientConnection::parseReceivedPacket(quint64 size, QByteArray data, qint
     processedRequest.content = jsonPacketData.content;
     processedRequest.thread_id = jsonPacketData.thread_id;
     processedRequest.thread_dest = jsonPacketData.thread_dest;
+    processedRequest.thread_src = jsonPacketData.thread_src;
     processedRequest.req_type = jsonPacketData.req_type;
     processedRequest.type_flag = jsonPacketData.type_flag;
     processedRequest.data = jsonPacketData.data;
@@ -159,6 +160,7 @@ void c_ClientConnection::parseReceivedPacket(quint64 size, QByteArray data, qint
     myStructures::packet packet;
     QMap<QString, QVariant> packetInfo;
     packetInfo["thread_dest"] = static_cast<qint8>(myTypes::CLINIC_CONNECTION_CONTROLLER);
+    packetInfo["thread_src"] = static_cast<qint8>(myTypes::SERVER);
     packetInfo["thread_id"] = processedRequest.thread_id;
     packetInfo["req_type"] = static_cast<qint8>(myTypes::RECEIVE_CONFIRMATION);
     packetInfo["type_flag"] = 0x00000001;

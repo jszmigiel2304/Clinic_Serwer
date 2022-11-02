@@ -45,6 +45,7 @@ myStructures::threadData c_myParser::ParseJsonPacket(QByteArray json, qintptr so
 
 
     packetData.thread_dest = static_cast<myTypes::ThreadDestination>( mainObject["thread_dest"].toInteger() );
+    packetData.thread_src = static_cast<myTypes::ThreadDestination>( mainObject["thread_src"].toInteger() );
     packetData.thread_id = mainObject["thread_id"].toInteger();
     packetData.req_type = static_cast<myTypes::RequestType>( mainObject["req_type"].toInteger() );
     packetData.type_flag = mainObject["type_flag"].toInteger();

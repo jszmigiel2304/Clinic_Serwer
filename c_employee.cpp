@@ -24,9 +24,9 @@ QString c_employee::getSelectEmployeePropertiesByIdQuery(quint32 id) const
     return query;
 }
 
-QString c_employee::getSelectEmployeeLogsByUserNameQuery(quint32 id) const
+QString c_employee::getSelectEmployeeLogsByUserNameQuery(QString name) const
 {
-    QString query = QString(GET_EMPLOYEE_LOGS_BY_USER_NAME_CLINIC_DB).arg(id);
+    QString query = QString(GET_EMPLOYEE_LOGS_BY_USER_NAME_CLINIC_DB).arg(name);
     return query;
 }
 

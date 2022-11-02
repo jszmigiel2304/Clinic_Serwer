@@ -15,7 +15,7 @@ public:
 
     QString getSelectEmployeePropertiesByUserNameQuery(QString name) const;
     QString getSelectEmployeePropertiesByIdQuery(quint32 id) const;
-    QString getSelectEmployeeLogsByUserNameQuery(quint32 id) const;
+    QString getSelectEmployeeLogsByUserNameQuery(QString name) const;
     QString getSelectEmployeeLogsByEmployeeIdQuery(quint32 id) const;
 
 signals:
