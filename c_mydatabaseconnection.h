@@ -35,7 +35,6 @@ private:
     QString Password;
 
 signals:
-    void newLog(QString log);
     void newLogToFile(QString sender, QString notes, QByteArray data);
 
 public slots:

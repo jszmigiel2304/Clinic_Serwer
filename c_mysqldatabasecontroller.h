@@ -36,8 +36,6 @@ public:
     void SetUpDatabase(QString name, QString hostName, quint16 port, QString databaseName, QString userName, QString password);
     void SetUpDatabase(QString name, QMap<QString, QVariant> settings);
 
-    //QList<QVariantList> exe(QString query, QString destDatabase);
-
     QString getAuthDbName() const;
     void setAuthDbName(const QString &value);
 
@@ -103,7 +101,6 @@ private:
 
 signals:
     void PropertiesChanged();
-    void newLog(QString log);
     void newLogToFile(QString sender, QString notes, QByteArray data);
 
 };

@@ -21,7 +21,6 @@ public:
     c_User(qint32 user_id);
     c_User(QString user_login, QString user_encrypted_password);
     c_User(qint32 user_id, QString user_login, QString user_encrypted_password);
-    //static qint32 getIDfromDataBase
 
     qint32 getId() const;
 

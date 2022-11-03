@@ -1,7 +1,6 @@
 #ifndef C_MYPARSER_H
 #define C_MYPARSER_H
 
-#include "w_logswindow.h"
 #include "c_structures.h"
 
 #include <QObject>
@@ -23,20 +22,9 @@ class c_myParser : public QObject
 public:
     explicit c_myParser(QObject *parent = nullptr);
 
-//    threadData Parse(quint64 size, QByteArray data, qintptr socketDescriptor); //to comment
-
 
     QPair<QByteArray, QByteArray> ParseReceivedPacket(quint64 size, QByteArray data/*, qintptr socketDescriptor*/);
     myStructures::threadData ParseJsonPacket(QByteArray json, qintptr socketDescriptor);
-
-
-
-
-//    authenticator parseForAuthenticateData(quint64 size, QByteArray data);
-
-
-//    QByteArray prepareDataForReplyPacket(threadData data);
-
 
     void parseJsonForAuthenticateData(const QJsonDocument *json, myTypes::JsonContent *content, qint32 *id, QString *name, QByteArray *password, QMap<QString, QVariant> *additionalData = nullptr);
     void parseJsonForAuthenticateData(const QJsonDocument *json, myTypes::JsonContent *content, QString *name, QByteArray *password, QMap<QString, QVariant> *additionalData = nullptr);
@@ -48,21 +36,14 @@ public:
 
     QJsonDocument prepareJSON(QMap<QString, QVariant> packet_info, QList<QMap<QString, QVariant>> packet_data);
     QJsonDocument prepareReceiveConfirmationJSON(QMap<QString, QVariant> packet_info, QByteArray md5Hash);
-//    QJsonDocument prepareErrorJSON(QMap<QString, threadData> errors, JsonContent content = ERRORS);
 
     QByteArray getJsonMD5Hash(QJsonDocument json);
-
-
-    w_logsWindow *getLogs() const;
-    void setLogs(w_logsWindow *value);
 
 signals:
 
 public slots:
 
 private:
-
-    w_logsWindow *logs;
 
 };
 

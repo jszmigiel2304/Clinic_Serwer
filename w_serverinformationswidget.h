@@ -20,7 +20,6 @@ public:
     ~w_ServerInformationsWidget();
 
 public slots:
-    //void refreshInformations();
     void refresh();
 private:
     Ui::w_ServerInformationsWidget *ui;

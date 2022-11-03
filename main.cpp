@@ -3,7 +3,6 @@
 #include "c_settingscontroller.h"
 #include "w_initializedialog.h"
 #include "c_mysqldatabasecontroller.h"
-#include "w_logswindow.h"
 #include "c_logscontroller.h"
 #include "c_myfiles.h"
 
@@ -19,10 +18,6 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);    
 
     c_myFiles * files = c_myFiles::Instance();
-
-//    QString str = a.applicationDirPath();
-//    QString strini = str + "/config.ini";
-//    QString strcss = str + "/styles.css";
 
     files->setCssFilePath(a.applicationDirPath() + "/styles.css");
     files->setConfigFilePath(a.applicationDirPath() + "/config.ini");
@@ -44,13 +39,9 @@ int main(int argc, char *argv[])
     else
     {
         w_MainWindow * w = new w_MainWindow(settContr.getSettings("window"));
-
-        w_logsWindow * logs = w_logsWindow::Instance();
         c_LogsController * logsCtrlr = c_LogsController::Instance();
-
         c_ClinicTcpServer * server = new c_ClinicTcpServer(settContr.getSettings("server"));
 
-        server->setLogs(logs);
         server->setLogsContr(logsCtrlr);
         server->createDbContr(settContr.getSettings("databaseAuthentication"), settContr.getSettings("databaseClinic"));
 
@@ -73,21 +64,10 @@ int main(int argc, char *argv[])
         w->shareServerPointer();
         w->shareDbContrPointer();
 
-        logs->show();/*
-        threadsW->show();*/
-
-        QObject::connect(w, SIGNAL(destroyed(QObject*)), w_logsWindow::Instance(), SLOT(close()) );/*
-        QObject::connect(threadsW, SIGNAL(destroyed(QObject*)), w_logsWindow::Instance(), SLOT(close()) );*/
-
         w->MyShow();
         w->refresh();
 
-
         return a.exec();
-
-//        dbContr->deleteLater();
-//        server->deleteLater();
-//        w->deleteLater();
     }        
 
     return a.exec();

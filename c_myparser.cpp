@@ -206,8 +206,6 @@ QJsonDocument c_myParser::prepareJSON(QMap<QString, QVariant> packet_info, QList
     mainobject["data"] = packetDataArray;
     jsonDoc.setObject(mainobject);
     return jsonDoc;
-
-
 }
 
 QJsonDocument c_myParser::prepareReceiveConfirmationJSON(QMap<QString, QVariant> packet_info, QByteArray md5Hash)
@@ -230,17 +228,6 @@ QJsonDocument c_myParser::prepareReceiveConfirmationJSON(QMap<QString, QVariant>
     mainobject["data"] = packetDataArray;
     jsonDoc.setObject(mainobject);
     return jsonDoc;
-}
-
-
-w_logsWindow *c_myParser::getLogs() const
-{
-    return logs;
-}
-
-void c_myParser::setLogs(w_logsWindow *value)
-{
-    logs = value;
 }
 
 QByteArray c_myParser::getJsonMD5Hash(QJsonDocument json)

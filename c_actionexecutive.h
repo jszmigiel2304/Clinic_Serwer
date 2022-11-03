@@ -1,7 +1,6 @@
 #ifndef C_ACTIONEXECUTIVE_H
 #define C_ACTIONEXECUTIVE_H
 
-#include "w_logswindow.h"
 #include "c_structures.h"
 #include "c_sessioncontroller.h"
 #include "c_mysqldatabasecontroller.h"
@@ -29,10 +28,6 @@ public:
     explicit c_actionExecutive(QObject *parent = nullptr);
     ~c_actionExecutive();
 
-
-    w_logsWindow *getLogs() const;
-    void setLogs(w_logsWindow *value);
-
     const QList<myStructures::processedThreadData> &getReceivedDataFromClients() const;
     void setReceivedDataFromClients(const QList<myStructures::processedThreadData> &newReceivedDataFromClients);
 
@@ -56,8 +51,6 @@ private:
 
     c_MySqlDatabaseController * dataBasesCtrlr;
 
-    w_logsWindow *logs;
-
     bool processingMode;
 
 private slots:
@@ -69,14 +62,12 @@ private slots:
     void processUpdateRequest(myStructures::processedThreadData processedRequest, QMap<QString, myStructures::processedThreadData> * processedRequestErrors = nullptr);
     void processErrors(QMap<QString, myStructures::processedThreadData> * errors);
 
-signals:
+signals:    
+    void newLogToFile(QString sender, QString notes, QByteArray data);
     void newDataInBuffor();
     void replyReady(QByteArray processedRequestMd5Hash, QByteArray json);
-//    void reply(quint64 size, QByteArray data);
     void exeDataBaseQuery(QString query, QString destDatabase, QList<QMap<QString,QVariant>> * results, QStringList * errors = nullptr);
     void exeDataBaseQuery(QString query, QString destDatabase, QString name, QString password, QList<QMap<QString,QVariant>> * results, QStringList * errors = nullptr);
-    void newLog(QString log);
-    void newLogToFile(QString sender, QString notes, QByteArray data);
     void processingErrors(QMap<QString, myStructures::processedThreadData> * errors);
 
 };

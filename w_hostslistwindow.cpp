@@ -127,8 +127,6 @@ void w_HostsListWindow::update()
 
     QString tittle = QString("Lista podłączonych urządzeń: ") + QString("%1").arg(hosts.count());
     ui->label->setText(tittle);
-
-    //ui->hostListScrollAreaContent->setLayout(lay);
 }
 
 void w_HostsListWindow::updateHostsList()
@@ -145,13 +143,6 @@ void w_HostsListWindow::on_refreshButton_clicked()
 
 void w_HostsListWindow::disconnectHost(QAction *action)
 {
-    /*QMessageBox msgBox;
-
-    QString msg = QString("pressed action: %1").arg(action->whatsThis());
-
-    msgBox.setText(msg);
-    msgBox.exec();*/
-
     quint32 index;
 
     QString actionDesc = action->whatsThis();
@@ -160,7 +151,6 @@ void w_HostsListWindow::disconnectHost(QAction *action)
     index = actionDesc.toInt();
 
     (dynamic_cast<c_ClinicTcpServer *>(this->watchedObjectsList["server"]))->removeClient(index);
-    //this->hosts[index]->disconnected();
 
     this->update();
 }

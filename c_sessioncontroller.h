@@ -3,7 +3,6 @@
 
 #include "c_mysqldatabasecontroller.h"
 #include "c_structures.h"
-#include "w_logswindow.h"
 #include "c_user.h"
 #include "mcs_DbQueriesSessionController.h"
 
@@ -13,6 +12,7 @@
 #include <QHostAddress>
 #include <QUuid>
 #include <QRandomGenerator>
+#include <QFile>
 
 class c_sessionController : QObject
 {

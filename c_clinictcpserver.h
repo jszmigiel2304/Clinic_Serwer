@@ -7,7 +7,6 @@
 #include "c_mydatabaseconnection.h"
 #include "c_clientconnection.h"
 #include "c_myconnection.h"
-#include "w_logswindow.h"
 #include "c_myparser.h"
 #include "c_actionexecutive.h"
 #include "c_logscontroller.h"
@@ -45,9 +44,6 @@ public:
     c_MySqlDatabaseController *getDbContr();
     void createDbContr(QMap<QString, QVariant> authDbSettings, QMap<QString, QVariant> clinicDbSettings);
 
-    w_logsWindow *getLogs() const;
-    void setLogs(w_logsWindow *newLogs);
-
     c_LogsController *getLogsContr() const;
     void setLogsContr(c_LogsController *newLogsContr);
 
@@ -62,7 +58,6 @@ signals:
     void PropertiesChanged();
     void MessageChanged(QString msg, int time);
     void PassDataBasesConnector(c_MySqlDatabaseController * connector);
-    void newLog(QString log);
     void refreshThreadsWindow();
 
 private:
@@ -75,7 +70,6 @@ private:
 
     QList<c_ClientConnection *> hostsList;
 
-    w_logsWindow * logs;
     c_LogsController * logsContr;
 
 private slots:

@@ -110,9 +110,6 @@ void c_MySqlDatabaseController::RemoveAllDatabases()
         this->RemoveDatabase(connectionName);
 
     }
-//    foreach (QSqlDatabase db, this->databases) {
-//        this->RemoveDatabase(db.connectionName());
-//    }
 }
 
 void c_MySqlDatabaseController::SetUpDatabase(QString name)
@@ -156,7 +153,6 @@ void c_MySqlDatabaseController::exe(QString query, QString destDatabase, QList< 
                 QMap<QString,QVariant> map;
                 for (int i=0; i<record.count(); ++i) {
                     map[record.fieldName(i)] = q.value(i);
-                    //params.insert(record.fieldName(i++), q.value(i));
                 }
 
                 results->push_back(map);
@@ -168,9 +164,6 @@ void c_MySqlDatabaseController::exe(QString query, QString destDatabase, QList< 
     } else {
         errors->push_back(QString("%1 Database opening error\n").arg(destDatabase));
     }
-
-
-    //return resultsList;
 }
 
 void c_MySqlDatabaseController::exe(QString query, QString destDatabase, QString name, QString password, QList<QMap<QString, QVariant> > *results, QStringList *errors)
@@ -186,7 +179,6 @@ void c_MySqlDatabaseController::exe(QString query, QString destDatabase, QString
                 QMap<QString,QVariant> map;
                 for (int i=0; i<record.count(); ++i) {
                     map[record.fieldName(i)] = q.value(i);
-                    //params.insert(record.fieldName(i++), q.value(i));
                 }
 
                 results->push_back(map);

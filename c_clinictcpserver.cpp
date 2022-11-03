@@ -79,16 +79,10 @@ void c_ClinicTcpServer::runServer()
         dbContr->AddDatabase("Authorization");
         dbContr->SetUpDatabase("Authorization");
         this->status = "   [ Authorization Database Connection ] Poprawnie skonfigurowane";
-
-        QString log = QString("[ Authorization Database Connection ] Poprawnie skonfigurowane");
-        emit newLog(log);
     }
     else
     {
         this->status = "   [ Authorization Database Connection ] Błąd";
-
-        QString log = QString("[ Authorization Database Connection ] Błąd");
-        emit newLog(log);
     }
 
     emit this->MessageChanged(this->status, 1000);
@@ -115,16 +109,10 @@ void c_ClinicTcpServer::runServer()
         dbContr->AddDatabase("Clinic");
         dbContr->SetUpDatabase("Clinic");
         this->status = "   [ Clinic Database Connection ] Poprawnie skonfigurowane";
-
-        QString log = QString("[ Clinic Database Connection ] Poprawnie skonfigurowane");
-        emit newLog(log);
     }
     else
     {
         this->status = "   [ Clinic Database Connection ] Błąd";
-
-        QString log = QString("[ Clinic Database Connection ] Błąd");
-        emit newLog(log);
     }
 
 
@@ -143,17 +131,11 @@ void c_ClinicTcpServer::runServer()
     {
         this->status = "[ Server TCP ]   Nie udało się uruchomić";
         emit this->MessageChanged(this->status, 2000);
-
-        QString log = QString("Nie udało się uruchomić serwera.");
-        emit newLog(log);
     }
      else
     {
         this->status = "[ Server TCP ] Uruchomiony";
         emit this->MessageChanged(this->status, 2000);
-
-        QString log = QString("Uruchomiono serwer TCP/IP");
-        emit newLog(log);
     }
 
 
@@ -172,11 +154,7 @@ void c_ClinicTcpServer::stopServer()
     emit this->dbContr->PropertiesChanged();
 
     this->status = "[Server TCP] Zatrzymano";
-
-    QString log = QString("[Server TCP] Zatrzymano");
-    logs->addLog(log);
     emit this->MessageChanged(this->status, 2000);
-
 }
 
 void c_ClinicTcpServer::startServer()
@@ -187,7 +165,6 @@ void c_ClinicTcpServer::startServer()
         else
         {
         }
-
 }
 
 void c_ClinicTcpServer::UpdateProperties(QMap<QString, QVariant> map)
@@ -232,27 +209,15 @@ QList<c_ClientConnection *> c_ClinicTcpServer::getHostsList() const
 void c_ClinicTcpServer::incomingConnection(qintptr socketDescriptor)
 {
     c_ClientConnection *connection = new c_ClientConnection(socketDescriptor);
-
-    connect(connection, SIGNAL(newLog(QString)), logs, SLOT(addLog(QString)));
     connect(connection, SIGNAL(newLogToFile(QString,QString,QByteArray)), logsContr, SLOT(saveLogToFile(QString,QString,QByteArray)));
-
-
-    connect(connection->getExecutive(), SIGNAL(newLog(QString)), logs, SLOT(addLog(QString)));
     connect(connection->getExecutive(), SIGNAL(newLogToFile(QString,QString,QByteArray)), logsContr, SLOT(saveLogToFile(QString,QString,QByteArray)));
 
     connection->getExecutive()->setDataBasesCtrlr(this->getDbContr());
-    //connect(connection->getExecutive(), SIGNAL(exeDataBaseQuery(QString, QString, QList<QMap<QString,QVariant>> *, QStringList *)), this->getDbContr(), SLOT(exe(QString, QString, QList<QMap<QString,QVariant>> *, QStringList *)));
-
     connect(connection, SIGNAL(newClient(c_ClientConnection*)), this, SLOT(newClient(c_ClientConnection*)));
     connect(connection, SIGNAL(connectionFinished(c_ClientConnection*)), this, SLOT(removeClient2(c_ClientConnection*)));
 
-
-    QString log = QString("incomingConnection(qintptr socketDescriptor) \n"
-                          "connection->start(); \n");
-
     addPendingConnection(connection->getSocket());
     emit connection->newClient(connection);
-    emit newLog(log);
 }
 
 void c_ClinicTcpServer::setDbContr(c_MySqlDatabaseController *value)
@@ -263,9 +228,6 @@ void c_ClinicTcpServer::setDbContr(c_MySqlDatabaseController *value)
 void c_ClinicTcpServer::newClient(c_ClientConnection *connection)
 {
     this->hostsList.push_back(connection);
-    QString log = QString("c_ClinicTcpServer::newClient(c_ClientConnection *connection)  \n"
-                          "dodano połączenie \n");
-    emit newLog(log);
     emit this->PropertiesChanged();
 }
 
@@ -310,18 +272,6 @@ void c_ClinicTcpServer::setLogsContr(c_LogsController *newLogsContr)
 {
     logsContr = newLogsContr;
 }
-
-w_logsWindow *c_ClinicTcpServer::getLogs() const
-{
-    return logs;
-}
-
-void c_ClinicTcpServer::setLogs(w_logsWindow *newLogs)
-{
-    logs = newLogs;
-    connect(this, SIGNAL(newLog(QString)), logs, SLOT(addLog(QString)));
-}
-
 
 void c_ClinicTcpServer::removeClients()
 {

@@ -1,8 +1,6 @@
 #ifndef C_CLIENTCONNECTION_H
 #define C_CLIENTCONNECTION_H
 
-
-#include "w_logswindow.h"
 #include "c_myparser.h"
 #include "c_logscontroller.h"
 #include "c_actionexecutive.h"
@@ -52,7 +50,6 @@ signals:
     void disconnect2();
     void connectionFinished(c_ClientConnection * client);
     void newClient(c_ClientConnection * client);
-    void newLog(QString log);
     void newLogToFile(QString sender, QString notes, QByteArray data);    
     void reply(quint64 size, QByteArray data);
     void sendDataToClientSignal(myStructures::packet packet);
@@ -60,7 +57,6 @@ signals:
 public slots:
     void readyRead();
     void disconnected();
-//    void sendDataToClient(quint64 size, QByteArray data);
     void sendDataToClient(myStructures::packet packet);
     void replyReceived(QByteArray processedRequestMd5Hash, QByteArray json);
 

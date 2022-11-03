@@ -56,10 +56,3 @@ void w_ServerInformationsWidget::refresh()
         ui->f_ClinicDbStatus->setStyleSheet("color: red");
 
 }
-
-//void w_ServerInformationsWidget::refreshInformations()
-//{
-//    ui->f_address->setText(map["address"].toString());
-//    ui->f_serverStatus->setText(map["isListening"].toBool() ? "UP" : "DOWN");
-//    ui->f_port->setText(map["port"].toString());
-//}

@@ -157,7 +157,6 @@ void w_MainWindow::on_actionServerConfigure_triggered()
     } else
     {
         w_serverConfigurationDialog * wnd = new w_serverConfigurationDialog(this);
-        //wnd->AddWatchedObject("server", this->watchedObjectsList["server"]);
         this->ShareWatchedObject("server", wnd);
         wnd->update();
         wnd->show();
@@ -189,7 +188,6 @@ void w_MainWindow::on_actionServerStop_triggered()
 void w_MainWindow::on_actionWindowConfigure_triggered()
 {
         w_windowConfigurationDialog * wnd = new w_windowConfigurationDialog(this);
-        //wnd->AddWatchedObject("server", this->watchedObjectsList["server"]);
         wnd->AddWatchedObject("appWindow", dynamic_cast<i_Watched *>(this));
         wnd->update();
         wnd->show();
@@ -242,9 +240,6 @@ void w_MainWindow::closeEvent(QCloseEvent *event)
         if(w_HostsListWindow::Instance().getIsShown())
             w_HostsListWindow::Instance().close();
 
-        if(w_logsWindow::Instance() != nullptr)
-            w_logsWindow::Instance()->close();
-
         event->accept();
     }
 }
@@ -277,7 +272,6 @@ void w_MainWindow::on_actionDataBaseConfigure_triggered()
     } else
     {
         w_DatabaseConnectionsConfigurationDialog * wnd = new w_DatabaseConnectionsConfigurationDialog(this);
-        //wnd->AddWatchedObject("server", this->watchedObjectsList["server"]);
         this->ShareWatchedObject("databaseController", wnd);
         wnd->shareDbContrPointer();
         wnd->update();

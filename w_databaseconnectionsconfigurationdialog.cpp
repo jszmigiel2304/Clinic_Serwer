@@ -96,10 +96,8 @@ void w_DatabaseConnectionsConfigurationDialog::applyButtonPressed()
     mapAuth = ui->AuthDbConnectionWidget->getDbConnectionProperties();
     mapClinic = ui->ClinicDbConnectionWidget->getDbConnectionProperties();
 
-    mapAuth.insert(mapClinic);  //nowe 6.2
-    this->watchedObjectsList["databaseController"]->UpdateProperties(mapAuth); //nowe 6.2
-//    this->watchedObjectsList["databaseController"]->UpdateProperties(mapAuth.unite(mapClinic));
-
+    mapAuth.insert(mapClinic);
+    this->watchedObjectsList["databaseController"]->UpdateProperties(mapAuth);
 
     c_SettingsController settCtrl(c_myFiles::Instance()->getConfigFilePath());
 

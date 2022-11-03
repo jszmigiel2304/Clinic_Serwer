@@ -21,7 +21,6 @@ public:
     ~w_InterfaceInformationsWidget();
 
 public slots:
-    //void refreshInformations(QMap<QString, QVariant> map);
     void refresh();
 
 

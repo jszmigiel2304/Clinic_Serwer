@@ -29,8 +29,6 @@ namespace myTypes {
                       SESSION_STATE_UPDATE_CONFIRMATION = 0x000003F0, SESSION_FILE_UPDATE_CONFIRMATION = 0x000003F1, SESSION_CLOSE_TIME_UPDATE_CONFIRMATION = 0x000003F2, SESSION_UNLOCK_CONFIRMATION = 0x000003F3,
                        EMPLOYEE_PROPERTIES_REQUEST = 0x00000400, EMPLOYEE_PROPERTIES_ANSWER = 0x00000401, EMPLOYEE_LOGS_REQUEST = 0x00000402, EMPLOYEE_LOGS_ANSWER = 0x00000403
                      };
-    //enum UserRole { NO_ROLE = 0x00, GUEST = 0x01, USER = 0x02, MODERATOR = 0x03, ADMIN = 0x04, SUPER = 0x05 };
-
 }
 
 namespace myStructures {
@@ -68,7 +66,6 @@ struct threadData {
     myTypes::ThreadDestination thread_src;
     myTypes::RequestType req_type;
     quint32 type_flag;
-    //quint64 data_size;
     QList<QMap<QString, QVariant>> data;
 };
 
@@ -81,7 +78,6 @@ struct processedThreadData {
     myTypes::ThreadDestination thread_src;
     myTypes::RequestType req_type;
     quint32 type_flag;
-    //quint64 data_size;
     QList<QMap<QString, QVariant>> data;
 };
 
@@ -93,7 +89,6 @@ struct sessionInformations {
     QDateTime endTime;
     QString ipv4Address;
     QString macAddress;
-    //QByteArray activity;
 };
 
 struct packet {
